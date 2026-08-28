@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Layers, Palette, Clock, User, Sparkles, Save, Trash2 } from 'lucide-react';
-import { Modality } from '../types';
+import { Modality, Professional } from '../types';
 
 interface ModalityModalProps {
   isOpen: boolean;
@@ -8,6 +8,7 @@ interface ModalityModalProps {
   onSave: (modalityData: Omit<Modality, 'id'>, existingId?: string) => void;
   onDelete?: (modalityId: string) => void;
   initialModality?: Modality | null;
+  professionals?: Professional[];
 }
 
 const PRESET_COLORS = [
@@ -29,6 +30,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
   onSave,
   onDelete,
   initialModality,
+  professionals = [],
 }) => {
   const [name, setName] = useState('');
   const [sheetTabName, setSheetTabName] = useState('');
@@ -36,6 +38,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
   const [description, setDescription] = useState('');
   const [defaultDurationMinutes, setDefaultDurationMinutes] = useState(50);
   const [instructorName, setInstructorName] = useState('');
+  const [instructors, setInstructors] = useState<string[]>([]);
   const [maxStudentsPerSlot, setMaxStudentsPerSlot] = useState(3);
 
   useEffect(() => {
@@ -46,6 +49,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
       setDescription(initialModality.description || '');
       setDefaultDurationMinutes(initialModality.defaultDurationMinutes || 50);
       setInstructorName(initialModality.instructorName || '');
+      setInstructors(initialModality.instructors || []);
       setMaxStudentsPerSlot(initialModality.maxStudentsPerSlot || 3);
     } else {
       setName('');
@@ -54,6 +58,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
       setDescription('');
       setDefaultDurationMinutes(50);
       setInstructorName('');
+      setInstructors([]);
       setMaxStudentsPerSlot(3);
     }
   }, [initialModality, isOpen]);
@@ -63,6 +68,14 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
     if (!initialModality) {
       // Auto suggest sheet tab name
       setSheetTabName(val.slice(0, 30));
+    }
+  };
+
+  const toggleInstructor = (profId: string) => {
+    if (instructors.includes(profId)) {
+      setInstructors(instructors.filter(id => id !== profId));
+    } else {
+      setInstructors([...instructors, profId]);
     }
   };
 
@@ -82,6 +95,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
         description: description.trim(),
         defaultDurationMinutes,
         instructorName: instructorName.trim(),
+        instructors,
         maxStudentsPerSlot,
       },
       initialModality?.id
@@ -219,16 +233,42 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
           </div>
 
           <div>
-            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
-              Instrutor(a) / Professor(a) Responsável
+            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-2">
+              Professores Disponíveis para esta Modalidade
             </label>
-            <input
-              type="text"
-              placeholder="Ex: Prof. Marcos Silva"
-              value={instructorName}
-              onChange={(e) => setInstructorName(e.target.value)}
-              className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500"
-            />
+            <div className="bg-[#121212] border border-white/10 rounded-xl p-3 grid grid-cols-2 gap-2">
+              {professionals.filter(p => p.role === 'Professor' || p.role === 'Personal').length === 0 ? (
+                <p className="text-xs text-zinc-500 col-span-2">Nenhum professor cadastrado. Vá em "Equipe" para adicionar.</p>
+              ) : (
+                professionals.filter(p => p.role === 'Professor' || p.role === 'Personal').map(prof => (
+                  <label key={prof.id} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-white/5 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={instructors.includes(prof.id)}
+                      onChange={() => toggleInstructor(prof.id)}
+                      className="rounded border-white/20 bg-black text-teal-500 focus:ring-teal-500/20"
+                    />
+                    <div className="flex items-center space-x-2">
+                      <div 
+                        className="w-4 h-4 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: prof.color || '#3B82F6' }}
+                      />
+                      <span className="text-xs text-zinc-300 truncate">{prof.name}</span>
+                    </div>
+                  </label>
+                ))
+              )}
+            </div>
+            {/* Fallback field just in case */}
+            <div className="mt-2">
+               <input
+                type="text"
+                placeholder="Ou digite o nome (antigo)..."
+                value={instructorName}
+                onChange={(e) => setInstructorName(e.target.value)}
+                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-[10px] text-slate-400 placeholder:text-zinc-600 focus:ring-teal-500"
+              />
+            </div>
           </div>
 
           <div>

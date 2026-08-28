@@ -524,7 +524,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                             Aba: {schedule.modalityName}
                           </span>
                           <span className="text-[11px] font-mono text-zinc-500">
-                            {schedule.plan}
+                            {schedule.professor ? `Prof. ${schedule.professor.replace('Prof. ', '').replace('Profª. ', '')}` : ''}
                           </span>
                         </div>
                       </div>

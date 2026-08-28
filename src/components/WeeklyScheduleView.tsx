@@ -357,7 +357,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
                                 {/* Card Actions (WhatsApp, Edit) */}
                                 <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-white/5">
                                   <span className="text-[10px] text-zinc-500 truncate font-mono">
-                                    {schedule.plan}
+                                    {schedule.professor ? `Prof. ${schedule.professor.replace('Prof. ', '').replace('Profª. ', '')}` : ''}
                                   </span>
                                   
                                   <div className="flex items-center space-x-1">

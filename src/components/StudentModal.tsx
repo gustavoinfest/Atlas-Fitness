@@ -17,7 +17,8 @@ import {
   StudentClassSchedule, 
   DayOfWeek, 
   StudentStatus,
-  ClientRecord 
+  ClientRecord,
+  Professional
 } from '../types';
 
 interface StudentModalProps {
@@ -25,6 +26,7 @@ interface StudentModalProps {
   onClose: () => void;
   onSave: (scheduleData: Omit<StudentClassSchedule, 'id' | 'attendanceHistory'>, existingId?: string) => void;
   modalities: Modality[];
+  professionals?: Professional[];
   clients?: ClientRecord[];
   initialSchedule?: StudentClassSchedule | null;
   defaultModalityId?: string;
@@ -39,6 +41,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
   onClose,
   onSave,
   modalities,
+  professionals = [],
   clients = [],
   initialSchedule,
   defaultModalityId,
@@ -55,6 +58,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
   const [endTime, setEndTime] = useState('08:50');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [professor, setProfessor] = useState('');
   const [status, setStatus] = useState<StudentStatus>('ativo');
   const [plan, setPlan] = useState('Mensal (2x/sem)');
   const [monthlyFee, setMonthlyFee] = useState<string>('300');
@@ -72,6 +76,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
       setEndTime(initialSchedule.endTime);
       setPhone(initialSchedule.phone);
       setEmail(initialSchedule.email || '');
+      setProfessor(initialSchedule.professor || '');
       setStatus(initialSchedule.status);
       setPlan(initialSchedule.plan);
       setMonthlyFee(initialSchedule.monthlyFee ? String(initialSchedule.monthlyFee) : '');
@@ -89,6 +94,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
       calculateAndSetEndTime(defaultTime || '08:00', dur);
       setPhone('');
       setEmail('');
+      setProfessor('');
       setStatus('ativo');
       setPlan('Mensal (2x/sem)');
       setMonthlyFee('300');
@@ -151,6 +157,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
         durationMinutes,
         phone: phone.trim(),
         email: email.trim(),
+        professor: professor.trim(),
         status,
         plan: plan.trim() || 'Padrão',
         monthlyFee: monthlyFee ? Number(monthlyFee) : undefined,
@@ -399,7 +406,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
             </div>
           </div>
 
-          {/* Row 5: Status, Plan, Fee */}
+          {/* Row 5: Status, Professor, Fee */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
@@ -419,15 +426,20 @@ export const StudentModal: React.FC<StudentModalProps> = ({
 
             <div>
               <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
-                Plano / Pacote
+                Professor Responsável
               </label>
-              <input
-                type="text"
-                placeholder="Ex: Mensal (2x/sem)"
-                value={plan}
-                onChange={(e) => setPlan(e.target.value)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500 focus:border-teal-500"
-              />
+              <select
+                value={professor}
+                onChange={(e) => setProfessor(e.target.value)}
+                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 focus:ring-teal-500 focus:border-teal-500"
+              >
+                <option value="" className="bg-[#121212]">Selecione um profissional...</option>
+                {professionals.filter(p => p.role === 'Professor' || p.role === 'Personal').map(prof => (
+                  <option key={prof.id} value={prof.name} className="bg-[#121212]">
+                    {prof.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>

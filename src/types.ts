@@ -41,11 +41,20 @@ export interface StudentClassSchedule {
   durationMinutes: number;
   status: StudentStatus;
   plan: string; // "Mensal (2x/sem)", "Trimestral", "Pacote 10 aulas", etc.
+  professor?: string; // e.g. "PAULO", "JOSÉ"
   startDate: string; // YYYY-MM-DD
   notes?: string;
   roomOrLocation?: string;
   monthlyFee?: number;
   attendanceHistory: AttendanceRecord[];
+}
+
+export interface Professional {
+  id: string;
+  name: string;
+  role: 'Professor' | 'Consultor' | 'Personal' | 'Atendente';
+  color?: string;
+  active: boolean;
 }
 
 export interface Modality {
@@ -75,4 +84,4 @@ export interface ScheduleConflict {
   schedules: StudentClassSchedule[];
 }
 
-export type ViewMode = 'agenda' | 'tabs' | 'students' | 'attendance' | 'conflicts' | 'sheets_sync';
+export type ViewMode = 'agenda' | 'tabs' | 'students' | 'attendance' | 'conflicts' | 'equipe' | 'sheets_sync';

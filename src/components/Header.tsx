@@ -9,7 +9,8 @@ import {
   CheckCircle2, 
   Users, 
   Layers,
-  Sparkles
+  Sparkles,
+  Database
 } from 'lucide-react';
 import { Modality, StudentClassSchedule, GoogleSheetsConfig } from '../types';
 import { exportAllToExcelFile, parseExcelFile } from '../services/googleSheetsService';
@@ -22,6 +23,8 @@ interface HeaderProps {
   onOpenNewStudentModal: () => void;
   onOpenNewModalityModal: () => void;
   onOpenImportModal: () => void;
+  onOpenExportModal: () => void;
+  onExportBackup: () => void;
   onImportData: (modalities: Modality[], schedules: StudentClassSchedule[]) => void;
 }
 
@@ -33,16 +36,14 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenNewStudentModal,
   onOpenNewModalityModal,
   onOpenImportModal,
+  onOpenExportModal,
+  onExportBackup,
   onImportData,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const activeStudentsCount = schedules.filter((s) => s.status === 'ativo').length;
   const totalWeeklyClasses = schedules.reduce((acc, curr) => acc + (curr.status === 'ativo' ? curr.daysOfWeek.length : 0), 0);
-
-  const handleExport = () => {
-    exportAllToExcelFile(modalities, schedules);
-  };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -140,12 +141,23 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Export .xlsx */}
             <button
               id="btn-export-excel"
-              onClick={handleExport}
+              onClick={onOpenExportModal}
               className="flex items-center space-x-1.5 bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 px-3.5 py-2 rounded-lg text-xs font-medium transition-all"
-              title="Baixar planilha Excel com uma aba por modalidade"
+              title="Baixar planilha Excel filtrada ou completa"
             >
               <Download className="h-3.5 w-3.5 text-zinc-400" />
               <span>Exportar (.xlsx)</span>
+            </button>
+
+            {/* Export Backup JSON */}
+            <button
+              id="btn-export-backup"
+              onClick={onExportBackup}
+              className="flex items-center space-x-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all shadow-[0_0_12px_rgba(99,102,241,0.1)]"
+              title="Baixar backup completo de todos os dados do sistema (.json)"
+            >
+              <Database className="h-3.5 w-3.5 text-indigo-400" />
+              <span>Backup</span>
             </button>
 
             {/* Universal Import Button */}

@@ -15,6 +15,14 @@ export interface FileParseResult {
   };
   hasClientData: boolean;
   hasScheduleData: boolean;
+  isSystemBackup?: boolean;
+  backupData?: {
+    modalities: Modality[];
+    schedules: StudentClassSchedule[];
+    clients: ClientRecord[];
+    googleConfig?: any;
+    professionals?: any[];
+  };
 }
 
 // Fix common encoding issues from legacy Brazilian software/exports
@@ -320,6 +328,30 @@ export async function parseAnyFile(file: File): Promise<FileParseResult> {
   if (extension === 'json') {
     const text = await file.text();
     const parsed = JSON.parse(text);
+
+    // Check if it's a full system backup
+    if (parsed.isSystemBackup && parsed.clients && parsed.schedules && parsed.modalities) {
+      return {
+        fileType: 'json',
+        fileName: file.name,
+        totalRows: parsed.clients.length + parsed.schedules.length + parsed.modalities.length,
+        columns: ['Dados do Sistema'],
+        sampleData: [],
+        detectedClients: [],
+        detectedSchedules: { modalities: [], schedules: [] },
+        hasClientData: false,
+        hasScheduleData: false,
+        isSystemBackup: true,
+        backupData: {
+          modalities: parsed.modalities,
+          schedules: parsed.schedules,
+          clients: parsed.clients,
+          googleConfig: parsed.googleConfig,
+          professionals: parsed.professionals,
+        }
+      };
+    }
+
     const rows = Array.isArray(parsed) ? parsed : parsed.clients || parsed.data || [parsed];
     const columns = rows.length > 0 ? Object.keys(rows[0]) : [];
     const detectedClients = rowsToClientRecords(rows);

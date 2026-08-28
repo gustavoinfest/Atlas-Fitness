@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   INITIAL_MODALITIES, 
-  INITIAL_SCHEDULES 
+  INITIAL_SCHEDULES,
+  INITIAL_PROFESSIONALS
 } from './data/initialData';
 import { INITIAL_CLIENTS } from './data/initialClients';
 import { 
@@ -12,7 +13,8 @@ import {
   DayOfWeek, 
   StudentStatus, 
   AttendanceStatus,
-  ClientRecord 
+  ClientRecord,
+  Professional
 } from './types';
 import { Header } from './components/Header';
 import { NavigationTabs } from './components/NavigationTabs';
@@ -21,18 +23,38 @@ import { ModalityTabsManager } from './components/ModalityTabsManager';
 import { StudentsListView } from './components/StudentsListView';
 import { AttendanceManager } from './components/AttendanceManager';
 import { ConflictChecker } from './components/ConflictChecker';
+import { ProfessionalsManager } from './components/ProfessionalsManager';
 import { StudentModal } from './components/StudentModal';
 import { ModalityModal } from './components/ModalityModal';
 import { GoogleSheetsSyncModal } from './components/GoogleSheetsSyncModal';
 import { UniversalImportModal } from './components/UniversalImportModal';
+import { ExportModal } from './components/ExportModal';
 
-const LOCAL_STORAGE_MODALITIES_KEY = 'agenda_gluteo_zone_modalities_v1';
-const LOCAL_STORAGE_SCHEDULES_KEY = 'agenda_gluteo_zone_schedules_v1';
-const LOCAL_STORAGE_GOOGLE_KEY = 'agenda_gluteo_zone_google_v1';
-const LOCAL_STORAGE_CLIENTS_KEY = 'agenda_gluteo_zone_clients_v1';
+const LOCAL_STORAGE_MODALITIES_KEY = 'agenda_gluteo_zone_modalities_v2';
+const LOCAL_STORAGE_SCHEDULES_KEY = 'agenda_gluteo_zone_schedules_v2';
+const LOCAL_STORAGE_GOOGLE_KEY = 'agenda_gluteo_zone_google_v2';
+const LOCAL_STORAGE_CLIENTS_KEY = 'agenda_gluteo_zone_clients_v2';
+const LOCAL_STORAGE_PROFESSIONALS_KEY = 'agenda_gluteo_zone_professionals_v1';
 
 export default function App() {
-  // 1. Modalities State (Tabs)
+  // 1. Professionals State
+  const [professionals, setProfessionals] = useState<Professional[]>(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_PROFESSIONALS_KEY);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to load saved professionals', e);
+      }
+    }
+    return INITIAL_PROFESSIONALS;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_PROFESSIONALS_KEY, JSON.stringify(professionals));
+  }, [professionals]);
+
+  // 1b. Modalities State (Tabs)
   const [modalities, setModalities] = useState<Modality[]>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_MODALITIES_KEY);
     if (saved) {
@@ -109,6 +131,7 @@ export default function App() {
 
   const [isGoogleSyncModalOpen, setIsGoogleSyncModalOpen] = useState(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   // Persistence effects
   useEffect(() => {
@@ -222,6 +245,14 @@ export default function App() {
     }
   };
 
+  const handleRestoreBackup = (backupData: any) => {
+    if (backupData.modalities) setModalities(backupData.modalities);
+    if (backupData.schedules) setSchedules(backupData.schedules);
+    if (backupData.clients) setClients(backupData.clients);
+    if (backupData.googleConfig) setGoogleConfig(backupData.googleConfig);
+    if (backupData.professionals) setProfessionals(backupData.professionals);
+  };
+
   const handleUpdateClientStatus = (clientId: string, newStatus: string) => {
     setClients((prev) =>
       prev.map((c) => (c.id === clientId ? { ...c, status: newStatus as any } : c))
@@ -326,6 +357,29 @@ export default function App() {
     );
   };
 
+  const handleExportBackup = () => {
+    const backupData = {
+      isSystemBackup: true,
+      backupVersion: '1.0',
+      exportDate: new Date().toISOString(),
+      modalities,
+      schedules,
+      clients,
+      googleConfig,
+      professionals,
+    };
+    
+    const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `backup-gluteo-zone-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const openNewStudentModal = (modalityId?: string, day?: DayOfWeek, time?: string) => {
     setEditingSchedule(null);
     setStudentModalDefaults({ modalityId, day, time });
@@ -361,6 +415,8 @@ export default function App() {
         onOpenNewStudentModal={() => openNewStudentModal()}
         onOpenNewModalityModal={openNewModalityModal}
         onOpenImportModal={() => setIsImportModalOpen(true)}
+        onOpenExportModal={() => setIsExportModalOpen(true)}
+        onExportBackup={handleExportBackup}
         onImportData={(mods, scheds) => handleImportSchedules(mods, scheds, 'replace')}
       />
 
@@ -433,9 +489,22 @@ export default function App() {
             onResolveConflict={openEditStudentModal}
           />
         )}
+
+        {currentView === 'equipe' && (
+          <ProfessionalsManager
+            professionals={professionals}
+            setProfessionals={setProfessionals}
+          />
+        )}
       </main>
 
       {/* Modals */}
+      <ExportModal
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+        modalities={modalities}
+        schedules={schedules}
+      />
       <StudentModal
         isOpen={isStudentModalOpen}
         onClose={() => {
@@ -444,6 +513,7 @@ export default function App() {
         }}
         onSave={handleSaveStudent}
         modalities={modalities}
+        professionals={professionals}
         clients={clients}
         initialSchedule={editingSchedule}
         defaultModalityId={studentModalDefaults.modalityId}
@@ -460,6 +530,7 @@ export default function App() {
         onSave={handleSaveModality}
         onDelete={handleDeleteModality}
         initialModality={editingModality}
+        professionals={professionals}
       />
 
       <GoogleSheetsSyncModal
@@ -477,6 +548,7 @@ export default function App() {
         onClose={() => setIsImportModalOpen(false)}
         onImportClients={handleImportClients}
         onImportSchedules={handleImportSchedules}
+        onRestoreBackup={handleRestoreBackup}
       />
     </div>
   );

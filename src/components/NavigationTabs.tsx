@@ -53,6 +53,12 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
       badge: conflictCount > 0 ? conflictCount : undefined,
     },
     {
+      id: 'equipe' as ViewMode,
+      label: 'Equipe & Profissionais',
+      icon: Users,
+      description: 'Gerenciar professores',
+    },
+    {
       id: 'sheets_sync' as ViewMode,
       label: 'Google Sheets',
       icon: FileSpreadsheet,
