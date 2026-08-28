@@ -3,6 +3,7 @@ import {
   INITIAL_MODALITIES, 
   INITIAL_SCHEDULES 
 } from './data/initialData';
+import { INITIAL_CLIENTS } from './data/initialClients';
 import { 
   Modality, 
   StudentClassSchedule, 
@@ -10,7 +11,8 @@ import {
   GoogleSheetsConfig, 
   DayOfWeek, 
   StudentStatus, 
-  AttendanceStatus 
+  AttendanceStatus,
+  ClientRecord 
 } from './types';
 import { Header } from './components/Header';
 import { NavigationTabs } from './components/NavigationTabs';
@@ -22,10 +24,12 @@ import { ConflictChecker } from './components/ConflictChecker';
 import { StudentModal } from './components/StudentModal';
 import { ModalityModal } from './components/ModalityModal';
 import { GoogleSheetsSyncModal } from './components/GoogleSheetsSyncModal';
+import { UniversalImportModal } from './components/UniversalImportModal';
 
 const LOCAL_STORAGE_MODALITIES_KEY = 'agenda_gluteo_zone_modalities_v1';
 const LOCAL_STORAGE_SCHEDULES_KEY = 'agenda_gluteo_zone_schedules_v1';
 const LOCAL_STORAGE_GOOGLE_KEY = 'agenda_gluteo_zone_google_v1';
+const LOCAL_STORAGE_CLIENTS_KEY = 'agenda_gluteo_zone_clients_v1';
 
 export default function App() {
   // 1. Modalities State (Tabs)
@@ -41,7 +45,7 @@ export default function App() {
     return INITIAL_MODALITIES;
   });
 
-  // 2. Schedules State (Students)
+  // 2. Schedules State (Students with assigned slots)
   const [schedules, setSchedules] = useState<StudentClassSchedule[]>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_SCHEDULES_KEY);
     if (saved) {
@@ -54,7 +58,21 @@ export default function App() {
     return INITIAL_SCHEDULES;
   });
 
-  // 3. Google Sheets Config State
+  // 3. General Clients Database (340+ clients list with status, professor, consultor, personal)
+  const [clients, setClients] = useState<ClientRecord[]>(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_CLIENTS_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch (e) {
+        console.error('Failed to load saved clients', e);
+      }
+    }
+    return INITIAL_CLIENTS;
+  });
+
+  // 4. Google Sheets Config State
   const [googleConfig, setGoogleConfig] = useState<GoogleSheetsConfig>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_GOOGLE_KEY);
     if (saved) {
@@ -74,10 +92,10 @@ export default function App() {
     };
   });
 
-  // 4. Navigation & Views
+  // 5. Navigation & Views
   const [currentView, setCurrentView] = useState<ViewMode>('agenda');
 
-  // 5. Modals State
+  // 6. Modals State
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
   const [editingSchedule, setEditingSchedule] = useState<StudentClassSchedule | null>(null);
   const [studentModalDefaults, setStudentModalDefaults] = useState<{
@@ -90,6 +108,7 @@ export default function App() {
   const [editingModality, setEditingModality] = useState<Modality | null>(null);
 
   const [isGoogleSyncModalOpen, setIsGoogleSyncModalOpen] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   // Persistence effects
   useEffect(() => {
@@ -99,6 +118,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_SCHEDULES_KEY, JSON.stringify(schedules));
   }, [schedules]);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_CLIENTS_KEY, JSON.stringify(clients));
+  }, [clients]);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_GOOGLE_KEY, JSON.stringify(googleConfig));
@@ -162,6 +185,80 @@ export default function App() {
     );
   };
 
+  // Client database handlers
+  const handleImportClients = (newClients: ClientRecord[], mode: 'merge' | 'replace') => {
+    if (mode === 'replace') {
+      setClients(newClients);
+    } else {
+      setClients((prev) => {
+        const existingIds = new Set(prev.map((c) => c.id));
+        const added = newClients.filter((c) => !existingIds.has(c.id));
+        const updated = prev.map((c) => {
+          const matchingNew = newClients.find((n) => n.id === c.id);
+          return matchingNew ? { ...c, ...matchingNew } : c;
+        });
+        return [...updated, ...added];
+      });
+    }
+  };
+
+  const handleImportSchedules = (
+    newModalities: Modality[],
+    newSchedules: StudentClassSchedule[],
+    mode: 'merge' | 'replace'
+  ) => {
+    if (mode === 'replace') {
+      if (newModalities.length > 0) setModalities(newModalities);
+      setSchedules(newSchedules);
+    } else {
+      if (newModalities.length > 0) {
+        setModalities((prev) => {
+          const prevNames = new Set(prev.map((m) => m.sheetTabName.toLowerCase()));
+          const extra = newModalities.filter((m) => !prevNames.has(m.sheetTabName.toLowerCase()));
+          return [...prev, ...extra];
+        });
+      }
+      setSchedules((prev) => [...prev, ...newSchedules]);
+    }
+  };
+
+  const handleUpdateClientStatus = (clientId: string, newStatus: string) => {
+    setClients((prev) =>
+      prev.map((c) => (c.id === clientId ? { ...c, status: newStatus as any } : c))
+    );
+  };
+
+  const handleDeleteClient = (clientId: string) => {
+    setClients((prev) => prev.filter((c) => c.id !== clientId));
+  };
+
+  const handleScheduleClient = (client: ClientRecord) => {
+    setEditingSchedule(null);
+    setStudentModalDefaults({
+      modalityId: modalities[0]?.id,
+      day: 'Segunda',
+      time: '08:00',
+    });
+    // Create prefilled schedule instance
+    setEditingSchedule({
+      id: '',
+      studentName: client.name,
+      modalityId: modalities[0]?.id || '',
+      modalityName: modalities[0]?.sheetTabName || 'Geral',
+      daysOfWeek: ['Segunda', 'Quarta'],
+      startTime: '08:00',
+      endTime: '08:50',
+      durationMinutes: 50,
+      phone: client.phone || '',
+      email: client.email || '',
+      status: client.status.toLowerCase().includes('inativ') ? 'trancado' : 'ativo',
+      plan: 'Mensal (2x/sem)',
+      notes: `Matrícula: #${client.id}${client.professor ? ` • Prof: ${client.professor}` : ''}${client.consultor ? ` • Consultor: ${client.consultor}` : ''}`,
+      attendanceHistory: [],
+    });
+    setIsStudentModalOpen(true);
+  };
+
   // Modality handlers
   const handleSaveModality = (modalityData: Omit<Modality, 'id'>, existingId?: string) => {
     if (existingId) {
@@ -170,7 +267,6 @@ export default function App() {
           m.id === existingId ? { ...m, ...modalityData } : m
         )
       );
-      // Also update schedules referencing this modality
       setSchedules((prev) =>
         prev.map((s) =>
           s.modalityId === existingId
@@ -190,7 +286,6 @@ export default function App() {
 
   const handleDeleteModality = (modalityId: string) => {
     setModalities((prev) => prev.filter((m) => m.id !== modalityId));
-    // Set schedules under this modality to general or keep them
     setSchedules((prev) => prev.filter((s) => s.modalityId !== modalityId));
   };
 
@@ -231,13 +326,6 @@ export default function App() {
     );
   };
 
-  // Import Handler from Excel or Google Sheets
-  const handleImportData = (newModalities: Modality[], newSchedules: StudentClassSchedule[]) => {
-    setModalities(newModalities);
-    setSchedules(newSchedules);
-    alert(`Sucesso! Foram importadas ${newModalities.length} abas de modalidades e ${newSchedules.length} matrículas.`);
-  };
-
   const openNewStudentModal = (modalityId?: string, day?: DayOfWeek, time?: string) => {
     setEditingSchedule(null);
     setStudentModalDefaults({ modalityId, day, time });
@@ -272,7 +360,8 @@ export default function App() {
         onOpenGoogleSync={() => setIsGoogleSyncModalOpen(true)}
         onOpenNewStudentModal={() => openNewStudentModal()}
         onOpenNewModalityModal={openNewModalityModal}
-        onImportData={handleImportData}
+        onOpenImportModal={() => setIsImportModalOpen(true)}
+        onImportData={(mods, scheds) => handleImportSchedules(mods, scheds, 'replace')}
       />
 
       {/* Navigation Sub-Header */}
@@ -317,10 +406,15 @@ export default function App() {
           <StudentsListView
             modalities={modalities}
             schedules={schedules}
+            clients={clients}
             onAddNewStudent={() => openNewStudentModal()}
+            onScheduleClient={handleScheduleClient}
             onEditStudent={openEditStudentModal}
             onDeleteStudent={handleDeleteStudent}
             onUpdateStatus={handleUpdateStudentStatus}
+            onOpenImportModal={() => setIsImportModalOpen(true)}
+            onUpdateClientStatus={handleUpdateClientStatus}
+            onDeleteClient={handleDeleteClient}
           />
         )}
 
@@ -350,6 +444,7 @@ export default function App() {
         }}
         onSave={handleSaveStudent}
         modalities={modalities}
+        clients={clients}
         initialSchedule={editingSchedule}
         defaultModalityId={studentModalDefaults.modalityId}
         defaultDay={studentModalDefaults.day}
@@ -374,7 +469,14 @@ export default function App() {
         schedules={schedules}
         googleConfig={googleConfig}
         onUpdateGoogleConfig={setGoogleConfig}
-        onImportData={handleImportData}
+        onImportData={(mods, scheds) => handleImportSchedules(mods, scheds, 'replace')}
+      />
+
+      <UniversalImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImportClients={handleImportClients}
+        onImportSchedules={handleImportSchedules}
       />
     </div>
   );

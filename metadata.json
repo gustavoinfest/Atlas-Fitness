@@ -1,6 +1,6 @@
 {
   "name": "Controle de Aulas por Modalidade",
-  "description": "Sistema para organizar e controlar a agenda de aulas dos alunos por modalidade integrada ao Google Sheets.",
+  "description": "Sistema para organizar e controlar a agenda de aulas dos alunos por modalidade, importação universal de planilhas e cadastro geral de alunas ativas, inativas e bloqueadas.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

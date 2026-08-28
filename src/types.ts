@@ -2,6 +2,23 @@ export type DayOfWeek = 'Segunda' | 'Terça' | 'Quarta' | 'Quinta' | 'Sexta' | '
 
 export type StudentStatus = 'ativo' | 'pendente' | 'ferias' | 'trancado';
 
+export type ClientStatus = 'Ativo' | 'Inativo' | 'Bloqueado' | 'Suspenso' | 'Pendente' | 'Trancado' | 'Férias';
+
+export interface ClientRecord {
+  id: string; // e.g. "13810" or generated uuid
+  name: string;
+  professor?: string;
+  consultor?: string;
+  personal?: string;
+  status: string; // "Ativo", "Inativo", "Bloqueado", "Suspenso", etc.
+  sisterName?: string;
+  motherName?: string;
+  phone?: string;
+  email?: string;
+  notes?: string;
+  registrationDate?: string;
+}
+
 export type AttendanceStatus = 'presente' | 'falta' | 'justificada' | 'reposicao';
 
 export interface AttendanceRecord {

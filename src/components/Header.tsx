@@ -21,6 +21,7 @@ interface HeaderProps {
   onOpenGoogleSync: () => void;
   onOpenNewStudentModal: () => void;
   onOpenNewModalityModal: () => void;
+  onOpenImportModal: () => void;
   onImportData: (modalities: Modality[], schedules: StudentClassSchedule[]) => void;
 }
 
@@ -31,6 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenGoogleSync,
   onOpenNewStudentModal,
   onOpenNewModalityModal,
+  onOpenImportModal,
   onImportData,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -146,15 +148,15 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Exportar (.xlsx)</span>
             </button>
 
-            {/* Import .xlsx */}
+            {/* Universal Import Button */}
             <button
               id="btn-import-excel"
-              onClick={() => fileInputRef.current?.click()}
-              className="flex items-center space-x-1.5 bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 px-3.5 py-2 rounded-lg text-xs font-medium transition-all"
-              title="Importar planilha do computador"
+              onClick={onOpenImportModal}
+              className="flex items-center space-x-1.5 bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all shadow-[0_0_12px_rgba(20,184,166,0.1)]"
+              title="Importar arquivos Excel (.xlsx), CSV, TXT ou colar dados"
             >
-              <Upload className="h-3.5 w-3.5 text-zinc-400" />
-              <span>Importar</span>
+              <Upload className="h-3.5 w-3.5 text-teal-400" />
+              <span>Importar Arquivos</span>
             </button>
 
             {/* New Student / Class Button */}

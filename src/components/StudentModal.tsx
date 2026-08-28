@@ -16,7 +16,8 @@ import {
   Modality, 
   StudentClassSchedule, 
   DayOfWeek, 
-  StudentStatus 
+  StudentStatus,
+  ClientRecord 
 } from '../types';
 
 interface StudentModalProps {
@@ -24,6 +25,7 @@ interface StudentModalProps {
   onClose: () => void;
   onSave: (scheduleData: Omit<StudentClassSchedule, 'id' | 'attendanceHistory'>, existingId?: string) => void;
   modalities: Modality[];
+  clients?: ClientRecord[];
   initialSchedule?: StudentClassSchedule | null;
   defaultModalityId?: string;
   defaultDay?: DayOfWeek;
@@ -37,12 +39,15 @@ export const StudentModal: React.FC<StudentModalProps> = ({
   onClose,
   onSave,
   modalities,
+  clients = [],
   initialSchedule,
   defaultModalityId,
   defaultDay,
   defaultTime,
 }) => {
   const [studentName, setStudentName] = useState('');
+  const [nameSuggestions, setNameSuggestions] = useState<ClientRecord[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [modalityId, setModalityId] = useState(defaultModalityId || (modalities[0]?.id || ''));
   const [daysOfWeek, setDaysOfWeek] = useState<DayOfWeek[]>(defaultDay ? [defaultDay] : ['Segunda', 'Quarta']);
   const [startTime, setStartTime] = useState(defaultTime || '08:00');
@@ -193,18 +198,81 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           
           {/* Row 1: Student Name & Modality Tab */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
-                Nome do Aluno *
+            <div className="relative">
+              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1 flex items-center justify-between">
+                <span>Nome do Aluno *</span>
+                {clients.length > 0 && (
+                  <span className="text-[10px] text-teal-400 font-mono font-normal">
+                    {clients.length} cadastrados
+                  </span>
+                )}
               </label>
               <input
                 type="text"
                 required
-                placeholder="Ex: Mariana Silva Costa"
+                placeholder="Ex: Mariana Silva ou Matrícula 13810"
                 value={studentName}
-                onChange={(e) => setStudentName(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setStudentName(val);
+                  if (val.trim().length > 1 && clients.length > 0) {
+                    const term = val.toLowerCase();
+                    const filtered = clients
+                      .filter(
+                        (c) =>
+                          c.name.toLowerCase().includes(term) ||
+                          c.id.toLowerCase().includes(term)
+                      )
+                      .slice(0, 6);
+                    setNameSuggestions(filtered);
+                    setShowSuggestions(filtered.length > 0);
+                  } else {
+                    setShowSuggestions(false);
+                  }
+                }}
+                onFocus={() => {
+                  if (studentName.trim().length > 1 && nameSuggestions.length > 0) {
+                    setShowSuggestions(true);
+                  }
+                }}
                 className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
               />
+
+              {/* Suggestions Dropdown */}
+              {showSuggestions && nameSuggestions.length > 0 && (
+                <div className="absolute left-0 right-0 top-full mt-1 bg-[#171717] border border-teal-500/30 rounded-xl shadow-2xl z-50 overflow-hidden max-h-48 overflow-y-auto">
+                  <div className="p-1.5 bg-[#1f1f1f] text-[10px] uppercase font-mono text-teal-400 font-bold px-3">
+                    Sugestões do Cadastro de Alunos:
+                  </div>
+                  {nameSuggestions.map((client) => (
+                    <div
+                      key={client.id}
+                      onClick={() => {
+                        setStudentName(client.name);
+                        if (client.phone && !phone) setPhone(client.phone);
+                        if (client.email && !email) setEmail(client.email);
+                        if (client.notes && !notes) {
+                          setNotes(`Matrícula: #${client.id} • ${client.notes}`);
+                        } else if (!notes) {
+                          setNotes(`Matrícula: #${client.id}`);
+                        }
+                        setShowSuggestions(false);
+                      }}
+                      className="px-3 py-2 hover:bg-teal-500/10 cursor-pointer border-b border-white/5 last:border-0 transition-colors flex items-center justify-between text-xs"
+                    >
+                      <div>
+                        <span className="font-bold text-white">{client.name}</span>
+                        <div className="text-[10px] text-zinc-400 font-mono">
+                          Matrícula: #{client.id} {client.professor ? `• Prof: ${client.professor}` : ''}
+                        </div>
+                      </div>
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        {client.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div>
