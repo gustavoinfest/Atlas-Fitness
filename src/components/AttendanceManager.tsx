@@ -109,7 +109,7 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
   return (
     <div className="space-y-4">
       {/* Date & Filter Header */}
-      <div className="bg-[#0d0d0d] rounded-2xl p-4 border border-white/5 shadow-lg">
+      <div className="bg-white rounded-2xl p-4 border border-zinc-200 shadow-lg">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           
           {/* Date Picker & Day Badge */}
@@ -123,7 +123,7 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                   type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="px-3 py-1.5 text-xs bg-[#121212] border border-white/10 rounded-xl text-white font-mono font-semibold focus:ring-teal-500"
+                  className="px-3 py-1.5 text-xs bg-zinc-100 border border-zinc-300 rounded-xl text-zinc-900 font-mono font-semibold focus:ring-teal-500"
                 />
                 <span className="px-2.5 py-1.5 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/30 text-xs font-bold">
                   {dayOfWeek}-feira
@@ -141,7 +141,7 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
             <select
               value={modalityFilter}
               onChange={(e) => setModalityFilter(e.target.value)}
-              className="bg-[#121212] border border-white/10 text-slate-200 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500"
+              className="bg-zinc-100 border border-zinc-300 text-zinc-800 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500"
             >
               <option value="all">Todas as Modalidades</option>
               {modalities.map((m) => (
@@ -169,7 +169,7 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
               <span>{justifiedCount} Justificadas</span>
             </div>
 
-            <div className="flex items-center space-x-1.5 bg-white/5 text-zinc-400 border border-white/10 px-2.5 py-1.5 rounded-xl font-semibold">
+            <div className="flex items-center space-x-1.5 bg-zinc-100 text-zinc-600 border border-zinc-300 px-2.5 py-1.5 rounded-xl font-semibold">
               <span>{pendingCount} Pendentes</span>
             </div>
           </div>
@@ -178,11 +178,11 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
       </div>
 
       {/* Class List for the Day */}
-      <div className="bg-[#0d0d0d] rounded-2xl border border-white/5 shadow-xl overflow-hidden">
+      <div className="bg-white rounded-2xl border border-zinc-200 shadow-xl overflow-hidden">
         {todaySchedules.length === 0 ? (
           <div className="py-12 text-center">
-            <Calendar className="h-10 w-10 text-zinc-600 mx-auto mb-2" />
-            <h3 className="text-sm font-semibold text-zinc-300">
+            <Calendar className="h-10 w-10 text-zinc-400 mx-auto mb-2" />
+            <h3 className="text-sm font-semibold text-zinc-700">
               Nenhuma aula agendada para {dayOfWeek} ({selectedDate})
             </h3>
             <p className="text-xs text-zinc-500 mt-1">
@@ -193,7 +193,7 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-[#0a0a0a] border-b border-white/5 text-zinc-500 font-semibold uppercase tracking-wider text-[11px]">
+                <tr className="bg-zinc-50 border-b border-zinc-200 text-zinc-500 font-semibold uppercase tracking-wider text-[11px]">
                   <th className="py-3 px-4">Horário</th>
                   <th className="py-3 px-4">Aluno</th>
                   <th className="py-3 px-4">Modalidade / Aba</th>
@@ -202,16 +202,16 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                   <th className="py-3 px-4 text-right">Lembrete</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-zinc-200">
                 {todaySchedules.map((schedule) => {
                   const att = getAttendanceForDate(schedule);
                   const currentStatus = att?.status;
                   const modColor = getModalityColor(schedule.modalityId);
 
                   return (
-                    <tr key={schedule.id} className="hover:bg-white/[0.02] transition-colors">
+                    <tr key={schedule.id} className="hover:bg-white transition-colors">
                       {/* Time */}
-                      <td className="py-3 px-4 font-bold text-zinc-200 whitespace-nowrap font-mono">
+                      <td className="py-3 px-4 font-bold text-zinc-800 whitespace-nowrap font-mono">
                         <div className="flex items-center space-x-1.5">
                           <Clock className="h-3.5 w-3.5 text-zinc-500" />
                           <span>{schedule.startTime} - {schedule.endTime}</span>
@@ -219,9 +219,9 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                       </td>
 
                       {/* Student */}
-                      <td className="py-3 px-4 font-semibold text-white">
+                      <td className="py-3 px-4 font-semibold text-zinc-900">
                         <div className="flex items-center space-x-2.5">
-                          <div className="h-7 w-7 rounded-xl bg-[#171717] border border-white/5 flex items-center justify-center font-bold text-teal-400 text-xs">
+                          <div className="h-7 w-7 rounded-xl bg-white border border-zinc-200 flex items-center justify-center font-bold text-teal-400 text-xs">
                             {schedule.studentName.charAt(0)}
                           </div>
                           <span>{schedule.studentName}</span>
@@ -231,7 +231,7 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                       {/* Modality */}
                       <td className="py-3 px-4">
                         <span
-                          className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider inline-block"
+                          className="px-2 py-0.5 rounded-full text-[10px] font-bold text-zinc-900 uppercase tracking-wider inline-block"
                           style={{ backgroundColor: modColor }}
                         >
                           {schedule.modalityName}
@@ -239,8 +239,8 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                       </td>
 
                       {/* Room */}
-                      <td className="py-3 px-4 text-zinc-400">
-                        {schedule.roomOrLocation || <span className="text-zinc-600">-</span>}
+                      <td className="py-3 px-4 text-zinc-600">
+                        {schedule.roomOrLocation || <span className="text-zinc-400">-</span>}
                       </td>
 
                       {/* Attendance Buttons */}
@@ -251,8 +251,8 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                             onClick={() => handleStatusClick(schedule.id, 'presente')}
                             className={`px-2.5 py-1 rounded-xl text-xs font-semibold border transition-all ${
                               currentStatus === 'presente'
-                                ? 'bg-emerald-500 text-black border-emerald-500 font-bold shadow-md'
-                                : 'bg-[#121212] text-zinc-300 border-white/5 hover:border-emerald-500/40 hover:text-emerald-400'
+                                ? 'bg-emerald-500 text-teal-900 border-emerald-500 font-bold shadow-md'
+                                : 'bg-zinc-100 text-zinc-700 border-zinc-200 hover:border-emerald-500/40 hover:text-emerald-400'
                             }`}
                             title="Marcar presença"
                           >
@@ -264,8 +264,8 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                             onClick={() => handleStatusClick(schedule.id, 'falta')}
                             className={`px-2.5 py-1 rounded-xl text-xs font-semibold border transition-all ${
                               currentStatus === 'falta'
-                                ? 'bg-rose-500 text-white border-rose-500 font-bold shadow-md'
-                                : 'bg-[#121212] text-zinc-300 border-white/5 hover:border-rose-500/40 hover:text-rose-400'
+                                ? 'bg-rose-500 text-zinc-900 border-rose-500 font-bold shadow-md'
+                                : 'bg-zinc-100 text-zinc-700 border-zinc-200 hover:border-rose-500/40 hover:text-rose-400'
                             }`}
                             title="Marcar falta"
                           >
@@ -277,8 +277,8 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                             onClick={() => handleStatusClick(schedule.id, 'justificada')}
                             className={`px-2.5 py-1 rounded-xl text-xs font-semibold border transition-all ${
                               currentStatus === 'justificada'
-                                ? 'bg-amber-500 text-black border-amber-500 font-bold shadow-md'
-                                : 'bg-[#121212] text-zinc-300 border-white/5 hover:border-amber-500/40 hover:text-amber-400'
+                                ? 'bg-amber-500 text-teal-900 border-amber-500 font-bold shadow-md'
+                                : 'bg-zinc-100 text-zinc-700 border-zinc-200 hover:border-amber-500/40 hover:text-amber-400'
                             }`}
                             title="Falta justificada"
                           >
@@ -290,8 +290,8 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                             onClick={() => handleStatusClick(schedule.id, 'reposicao')}
                             className={`px-2 py-1 rounded-xl text-xs font-semibold border transition-all ${
                               currentStatus === 'reposicao'
-                                ? 'bg-sky-500 text-black border-sky-500 font-bold shadow-md'
-                                : 'bg-[#121212] text-zinc-300 border-white/5 hover:border-sky-500/40 hover:text-sky-400'
+                                ? 'bg-sky-500 text-teal-900 border-sky-500 font-bold shadow-md'
+                                : 'bg-zinc-100 text-zinc-700 border-zinc-200 hover:border-sky-500/40 hover:text-sky-400'
                             }`}
                             title="Aula de reposição"
                           >
@@ -312,7 +312,7 @@ export const AttendanceManager: React.FC<AttendanceManagerProps> = ({
                             <span>Lembrar</span>
                           </button>
                         ) : (
-                          <span className="text-zinc-600 text-[11px] font-mono">-</span>
+                          <span className="text-zinc-400 text-[11px] font-mono">-</span>
                         )}
                       </td>
 

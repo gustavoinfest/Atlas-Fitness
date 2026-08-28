@@ -405,7 +405,7 @@ export default function App() {
   const conflictCount = calculateConflictCount();
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-slate-300 flex flex-col font-sans selection:bg-teal-500/30 selection:text-teal-200">
+    <div className="min-h-screen bg-zinc-50 text-zinc-700 flex flex-col font-sans selection:bg-teal-500/30 selection:text-teal-900">
       {/* Top Header */}
       <Header
         modalities={modalities}

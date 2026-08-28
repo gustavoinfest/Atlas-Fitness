@@ -62,7 +62,7 @@ export const ConflictChecker: React.FC<ConflictCheckerProps> = ({
   return (
     <div className="space-y-4">
       {/* Alert Banner / Header */}
-      <div className="bg-[#0d0d0d] rounded-2xl p-5 border border-white/5 shadow-xl">
+      <div className="bg-white rounded-2xl p-5 border border-zinc-200 shadow-xl">
         <div className="flex items-center space-x-3">
           <div
             className={`h-10 w-10 rounded-xl flex items-center justify-center ${
@@ -78,7 +78,7 @@ export const ConflictChecker: React.FC<ConflictCheckerProps> = ({
             )}
           </div>
           <div>
-            <h2 className="text-base font-bold text-white">
+            <h2 className="text-base font-bold text-zinc-900">
               {conflicts.length > 0
                 ? `${conflicts.length} Atenção: Conflito(s) de Capacidade / Horário`
                 : 'Nenhum conflito de horário detectado!'}
@@ -98,17 +98,17 @@ export const ConflictChecker: React.FC<ConflictCheckerProps> = ({
           {conflicts.map((conflict) => (
             <div
               key={conflict.id}
-              className="bg-[#0d0d0d] border border-amber-500/30 rounded-2xl p-4 shadow-lg"
+              className="bg-white border border-amber-500/30 rounded-2xl p-4 shadow-lg"
             >
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 pb-3 border-b border-white/5">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 pb-3 border-b border-zinc-200">
                 <div className="flex items-center space-x-2">
                   <span
-                    className="px-2 py-0.5 rounded text-xs font-bold text-white"
+                    className="px-2 py-0.5 rounded text-xs font-bold text-zinc-900"
                     style={{ backgroundColor: conflict.modality.color }}
                   >
                     Aba: {conflict.modality.sheetTabName}
                   </span>
-                  <span className="font-bold text-white text-sm font-mono">
+                  <span className="font-bold text-zinc-900 text-sm font-mono">
                     {conflict.day} às {conflict.timeSlot}
                   </span>
                 </div>
@@ -123,10 +123,10 @@ export const ConflictChecker: React.FC<ConflictCheckerProps> = ({
                 {conflict.students.map((student) => (
                   <div
                     key={student.id}
-                    className="bg-[#121212] p-3 rounded-xl border border-white/5 shadow-xs flex items-center justify-between text-xs"
+                    className="bg-zinc-100 p-3 rounded-xl border border-zinc-200 shadow-xs flex items-center justify-between text-xs"
                   >
                     <div>
-                      <span className="font-semibold text-white block">
+                      <span className="font-semibold text-zinc-900 block">
                         {student.studentName}
                       </span>
                       <span className="text-[11px] text-zinc-500 font-mono">
@@ -135,7 +135,7 @@ export const ConflictChecker: React.FC<ConflictCheckerProps> = ({
                     </div>
                     <button
                       onClick={() => onResolveConflict(student)}
-                      className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-teal-400 font-semibold text-xs border border-white/10 transition-colors"
+                      className="px-2.5 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-teal-400 font-semibold text-xs border border-zinc-300 transition-colors"
                       title="Editar horário deste aluno"
                     >
                       Ajustar

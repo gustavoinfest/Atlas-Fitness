@@ -160,17 +160,17 @@ export const GoogleSheetsSyncModal: React.FC<GoogleSheetsSyncModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#0d0d0d] rounded-3xl max-w-2xl w-full shadow-2xl border border-white/10 overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 bg-zinc-50/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+      <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-zinc-300 overflow-hidden my-8">
         
         {/* Modal Header */}
-        <div className="bg-[#0a0a0a] text-white px-6 py-5 flex items-center justify-between border-b border-white/5">
+        <div className="bg-zinc-50 text-zinc-900 px-6 py-5 flex items-center justify-between border-b border-zinc-200">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
               <Cloud className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-zinc-900">
                 Integração com Google Sheets
               </h3>
               <p className="text-xs text-zinc-500">
@@ -180,7 +180,7 @@ export const GoogleSheetsSyncModal: React.FC<GoogleSheetsSyncModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
+            className="p-1.5 rounded-xl text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
@@ -209,13 +209,13 @@ export const GoogleSheetsSyncModal: React.FC<GoogleSheetsSyncModalProps> = ({
 
           {/* Active Connection Banner */}
           {googleConfig.isConnected && (
-            <div className="bg-[#121212] border border-emerald-500/30 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shadow-md">
+            <div className="bg-zinc-100 border border-emerald-500/30 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shadow-md">
               <div>
-                <div className="flex items-center space-x-2 text-white font-bold text-sm">
+                <div className="flex items-center space-x-2 text-zinc-900 font-bold text-sm">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400" />
                   <span>Planilha Ativa: {googleConfig.spreadsheetTitle}</span>
                 </div>
-                <p className="text-[11px] text-zinc-400 mt-1 font-mono">
+                <p className="text-[11px] text-zinc-600 mt-1 font-mono">
                   Última sincronização: {googleConfig.lastSyncTime || 'Agora'} • {modalities.length} abas ativas
                 </p>
               </div>
@@ -235,14 +235,14 @@ export const GoogleSheetsSyncModal: React.FC<GoogleSheetsSyncModalProps> = ({
           )}
 
           {/* Section 1: Create New Google Sheet */}
-          <div className="bg-[#121212] rounded-2xl p-4 border border-white/5 space-y-3 shadow-xs">
+          <div className="bg-zinc-100 rounded-2xl p-4 border border-zinc-200 space-y-3 shadow-xs">
             <div className="flex items-center space-x-2">
               <Sparkles className="h-4 w-4 text-teal-400" />
-              <h4 className="font-bold text-white text-sm">
+              <h4 className="font-bold text-zinc-900 text-sm">
                 Criar Nova Planilha Modelo no Google Sheets
               </h4>
             </div>
-            <p className="text-zinc-400 leading-relaxed">
+            <p className="text-zinc-600 leading-relaxed">
               Cria automaticamente uma nova planilha no seu Google Drive com uma aba formatada para cada uma das {modalities.length} modalidades cadastradas (Pilates, Musculação, Natação, etc.).
             </p>
 
@@ -252,12 +252,12 @@ export const GoogleSheetsSyncModal: React.FC<GoogleSheetsSyncModalProps> = ({
                 value={spreadsheetTitle}
                 onChange={(e) => setSpreadsheetTitle(e.target.value)}
                 placeholder="Título da nova planilha"
-                className="flex-1 px-3 py-2 bg-[#0a0a0a] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500"
+                className="flex-1 px-3 py-2 bg-zinc-50 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-teal-500"
               />
               <button
                 onClick={handleCreateNewSheet}
                 disabled={isLoading}
-                className="px-4 py-2 bg-white text-black hover:bg-zinc-200 font-bold uppercase tracking-wider text-[11px] rounded-xl shadow-lg transition-all flex items-center justify-center space-x-1.5 shrink-0"
+                className="px-4 py-2 bg-white text-teal-900 hover:bg-zinc-200 font-bold uppercase tracking-wider text-[11px] rounded-xl shadow-lg transition-all flex items-center justify-center space-x-1.5 shrink-0"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 <span>Criar no Google Drive</span>
@@ -266,14 +266,14 @@ export const GoogleSheetsSyncModal: React.FC<GoogleSheetsSyncModalProps> = ({
           </div>
 
           {/* Section 2: Link Existing Google Sheet */}
-          <div className="bg-[#121212] rounded-2xl p-4 border border-white/5 space-y-3 shadow-xs">
+          <div className="bg-zinc-100 rounded-2xl p-4 border border-zinc-200 space-y-3 shadow-xs">
             <div className="flex items-center space-x-2">
-              <FileSpreadsheet className="h-4 w-4 text-zinc-400" />
-              <h4 className="font-bold text-white text-sm">
+              <FileSpreadsheet className="h-4 w-4 text-zinc-600" />
+              <h4 className="font-bold text-zinc-900 text-sm">
                 Conectar com Planilha Existente
               </h4>
             </div>
-            <p className="text-zinc-400">
+            <p className="text-zinc-600">
               Cole o link ou o ID da planilha do Google Sheets que você já usa:
             </p>
 
@@ -283,12 +283,12 @@ export const GoogleSheetsSyncModal: React.FC<GoogleSheetsSyncModalProps> = ({
                 value={spreadsheetInput}
                 onChange={(e) => setSpreadsheetInput(e.target.value)}
                 placeholder="https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit"
-                className="flex-1 px-3 py-2 bg-[#0a0a0a] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500 font-mono"
+                className="flex-1 px-3 py-2 bg-zinc-50 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-teal-500 font-mono"
               />
               <button
                 onClick={handleConnectExisting}
                 disabled={isLoading}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-[11px] uppercase tracking-wider rounded-xl border border-white/10 shadow-xs transition-all flex items-center justify-center space-x-1.5 shrink-0"
+                className="px-4 py-2 bg-zinc-200 hover:bg-zinc-300 text-zinc-900 font-bold text-[11px] uppercase tracking-wider rounded-xl border border-zinc-300 shadow-xs transition-all flex items-center justify-center space-x-1.5 shrink-0"
               >
                 <Cloud className="h-3.5 w-3.5 text-teal-400" />
                 <span>Carregar Abas</span>
@@ -297,13 +297,13 @@ export const GoogleSheetsSyncModal: React.FC<GoogleSheetsSyncModalProps> = ({
           </div>
 
           {/* Section 3: Direct Excel Download / Upload */}
-          <div className="border-t border-white/5 pt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="border-t border-zinc-200 pt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <span className="text-zinc-500">
               Precisa trabalhar offline ou salvar backup?
             </span>
             <button
               onClick={() => exportAllToExcelFile(modalities, schedules)}
-              className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl border border-white/10 bg-[#121212] text-zinc-300 hover:text-white hover:bg-white/5 font-semibold transition-colors text-xs"
+              className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl border border-zinc-300 bg-zinc-100 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-100 font-semibold transition-colors text-xs"
             >
               <Download className="h-3.5 w-3.5 text-teal-400" />
               <span>Exportar Arquivo (.xlsx) com Todas as Abas</span>

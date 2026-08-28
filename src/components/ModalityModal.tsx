@@ -107,20 +107,20 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#0d0d0d] rounded-3xl max-w-lg w-full shadow-2xl border border-white/10 overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 bg-zinc-50/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+      <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-zinc-300 overflow-hidden my-8">
         
         {/* Modal Header */}
-        <div className="bg-[#0a0a0a] text-white px-6 py-5 flex items-center justify-between border-b border-white/5">
+        <div className="bg-zinc-50 text-zinc-900 px-6 py-5 flex items-center justify-between border-b border-zinc-200">
           <div className="flex items-center space-x-3">
             <div
-              className="h-10 w-10 rounded-xl flex items-center justify-center text-white shadow-lg"
+              className="h-10 w-10 rounded-xl flex items-center justify-center text-zinc-900 shadow-lg"
               style={{ backgroundColor: color }}
             >
               <Layers className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-zinc-900">
                 {initialModality ? 'Editar Aba de Modalidade' : 'Criar Nova Aba de Modalidade'}
               </h3>
               <p className="text-xs text-zinc-500">
@@ -130,7 +130,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
+            className="p-1.5 rounded-xl text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
@@ -140,7 +140,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs">
           
           <div>
-            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+            <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
               Nome da Modalidade *
             </label>
             <input
@@ -149,12 +149,12 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
               placeholder="Ex: Beach Tennis, Pilates Clínico, Dança de Salão..."
               value={name}
               onChange={(e) => handleNameChange(e.target.value)}
-              className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
             />
           </div>
 
           <div>
-            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+            <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
               Nome da Aba na Planilha (Google Sheets / Excel) *
             </label>
             <input
@@ -164,7 +164,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
               placeholder="Ex: Beach Tennis"
               value={sheetTabName}
               onChange={(e) => setSheetTabName(e.target.value)}
-              className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 font-mono"
+              className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 font-mono"
             />
             <span className="text-[11px] text-zinc-500 mt-1 block">
               Máximo 31 caracteres (limite do formato de abas de planilhas).
@@ -173,8 +173,8 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
 
           {/* Color Picker */}
           <div>
-            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1.5 flex items-center space-x-1">
-              <Palette className="h-3.5 w-3.5 text-zinc-400" />
+            <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1.5 flex items-center space-x-1">
+              <Palette className="h-3.5 w-3.5 text-zinc-600" />
               <span>Cor de Identificação da Aba</span>
             </label>
             <div className="flex items-center space-x-2">
@@ -193,7 +193,7 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
                 type="color"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
-                className="h-7 w-7 rounded-lg cursor-pointer border border-white/10 p-0 bg-transparent"
+                className="h-7 w-7 rounded-lg cursor-pointer border border-zinc-300 p-0 bg-transparent"
                 title="Personalizar cor"
               />
             </div>
@@ -201,24 +201,24 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Duração Padrão das Aulas (minutos)
               </label>
               <select
                 value={defaultDurationMinutes}
                 onChange={(e) => setDefaultDurationMinutes(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 focus:ring-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 focus:ring-teal-500"
               >
-                <option value={30} className="bg-[#121212]">30 minutos</option>
-                <option value={45} className="bg-[#121212]">45 minutos</option>
-                <option value={50} className="bg-[#121212]">50 minutos</option>
-                <option value={60} className="bg-[#121212]">60 minutos (1h)</option>
-                <option value={90} className="bg-[#121212]">90 minutos (1h30)</option>
+                <option value={30} className="bg-zinc-100">30 minutos</option>
+                <option value={45} className="bg-zinc-100">45 minutos</option>
+                <option value={50} className="bg-zinc-100">50 minutos</option>
+                <option value={60} className="bg-zinc-100">60 minutos (1h)</option>
+                <option value={90} className="bg-zinc-100">90 minutos (1h30)</option>
               </select>
             </div>
 
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Capacidade por Horário (Alunos)
               </label>
               <input
@@ -227,33 +227,33 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
                 max={50}
                 value={maxStudentsPerSlot}
                 onChange={(e) => setMaxStudentsPerSlot(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 font-mono focus:ring-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 font-mono focus:ring-teal-500"
               />
             </div>
           </div>
 
           <div>
-            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-2">
+            <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-2">
               Professores Disponíveis para esta Modalidade
             </label>
-            <div className="bg-[#121212] border border-white/10 rounded-xl p-3 grid grid-cols-2 gap-2">
+            <div className="bg-zinc-100 border border-zinc-300 rounded-xl p-3 grid grid-cols-2 gap-2">
               {professionals.filter(p => p.role === 'Professor' || p.role === 'Personal').length === 0 ? (
                 <p className="text-xs text-zinc-500 col-span-2">Nenhum professor cadastrado. Vá em "Equipe" para adicionar.</p>
               ) : (
                 professionals.filter(p => p.role === 'Professor' || p.role === 'Personal').map(prof => (
-                  <label key={prof.id} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-white/5 transition-colors">
+                  <label key={prof.id} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-zinc-100 transition-colors">
                     <input
                       type="checkbox"
                       checked={instructors.includes(prof.id)}
                       onChange={() => toggleInstructor(prof.id)}
-                      className="rounded border-white/20 bg-black text-teal-500 focus:ring-teal-500/20"
+                      className="rounded border-zinc-400 bg-zinc-50 text-teal-500 focus:ring-teal-500/20"
                     />
                     <div className="flex items-center space-x-2">
                       <div 
                         className="w-4 h-4 rounded-full flex-shrink-0"
                         style={{ backgroundColor: prof.color || '#3B82F6' }}
                       />
-                      <span className="text-xs text-zinc-300 truncate">{prof.name}</span>
+                      <span className="text-xs text-zinc-700 truncate">{prof.name}</span>
                     </div>
                   </label>
                 ))
@@ -266,13 +266,13 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
                 placeholder="Ou digite o nome (antigo)..."
                 value={instructorName}
                 onChange={(e) => setInstructorName(e.target.value)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-[10px] text-slate-400 placeholder:text-zinc-600 focus:ring-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-[10px] text-slate-400 placeholder:text-zinc-400 focus:ring-teal-500"
               />
             </div>
           </div>
 
           <div>
-            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+            <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
               Descrição ou Regras da Modalidade
             </label>
             <textarea
@@ -280,12 +280,12 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
               placeholder="Ex: Utiliza equipamentos específicos, limite de 3 alunos simultâneos..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-teal-500"
             />
           </div>
 
           {/* Actions */}
-          <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+          <div className="pt-4 border-t border-zinc-200 flex items-center justify-between">
             {initialModality && onDelete ? (
               <button
                 type="button"
@@ -306,13 +306,13 @@ export const ModalityModal: React.FC<ModalityModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 font-semibold transition-colors"
+                className="px-4 py-2 rounded-xl border border-zinc-300 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 font-semibold transition-colors"
               >
                 Cancelar
               </button>
               <button
                 type="submit"
-                className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 font-bold shadow-lg uppercase tracking-wider transition-all"
+                className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-white text-teal-900 hover:bg-zinc-200 font-bold shadow-lg uppercase tracking-wider transition-all"
               >
                 <Save className="h-4 w-4" />
                 <span>{initialModality ? 'Salvar Aba' : 'Criar Aba'}</span>

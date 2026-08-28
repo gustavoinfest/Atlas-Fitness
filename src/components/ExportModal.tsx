@@ -41,18 +41,18 @@ export const ExportModal: React.FC<ExportModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-[#18181B] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
-        <div className="p-4 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
+    <div className="fixed inset-0 bg-[#2D2A26]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white border border-zinc-300 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
+        <div className="p-4 border-b border-zinc-300 flex items-center justify-between bg-white">
           <div className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-lg bg-teal-500/20 flex items-center justify-center border border-teal-500/30">
               <Download className="h-4 w-4 text-teal-400" />
             </div>
-            <h2 className="text-lg font-bold text-white">Exportar Dados</h2>
+            <h2 className="text-lg font-bold text-zinc-900">Exportar Dados</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-lg transition-colors text-zinc-400 hover:text-white"
+            className="p-2 hover:bg-zinc-200 rounded-lg transition-colors text-zinc-600 hover:text-zinc-900"
           >
             <X className="h-5 w-5" />
           </button>
@@ -60,24 +60,24 @@ export const ExportModal: React.FC<ExportModalProps> = ({
 
         <div className="p-5 space-y-5">
           <div className="space-y-3">
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-zinc-600">
               Selecione os filtros abaixo para exportar apenas os dados que você precisa para uma planilha Excel.
             </p>
 
-            <div className="space-y-4 bg-[#121212] p-4 rounded-xl border border-white/5">
-              <div className="flex items-center space-x-2 mb-2 text-zinc-300">
+            <div className="space-y-4 bg-zinc-100 p-4 rounded-xl border border-zinc-200">
+              <div className="flex items-center space-x-2 mb-2 text-zinc-700">
                 <Filter className="h-4 w-4" />
                 <span className="text-sm font-semibold">Filtros de Exportação</span>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 mb-1">
+                <label className="block text-xs font-semibold text-zinc-600 mb-1">
                   Modalidade / Aba
                 </label>
                 <select
                   value={modalityFilter}
                   onChange={(e) => setModalityFilter(e.target.value)}
-                  className="w-full bg-[#171717] border border-white/10 rounded-xl px-3 py-2 text-zinc-200 text-sm focus:ring-teal-500 focus:border-teal-500"
+                  className="w-full bg-white border border-zinc-300 rounded-xl px-3 py-2 text-zinc-800 text-sm focus:ring-teal-500 focus:border-teal-500"
                 >
                   <option value="all">Todas as Modalidades</option>
                   {modalities.map((m) => (
@@ -89,13 +89,13 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 mb-1">
+                <label className="block text-xs font-semibold text-zinc-600 mb-1">
                   Dia da Semana
                 </label>
                 <select
                   value={dayFilter}
                   onChange={(e) => setDayFilter(e.target.value)}
-                  className="w-full bg-[#171717] border border-white/10 rounded-xl px-3 py-2 text-zinc-200 text-sm focus:ring-teal-500 focus:border-teal-500"
+                  className="w-full bg-white border border-zinc-300 rounded-xl px-3 py-2 text-zinc-800 text-sm focus:ring-teal-500 focus:border-teal-500"
                 >
                   <option value="all">Todos os Dias</option>
                   <option value="Segunda">Segunda</option>
@@ -111,16 +111,16 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           </div>
         </div>
 
-        <div className="p-4 border-t border-white/10 bg-black/20 flex justify-end space-x-3">
+        <div className="p-4 border-t border-zinc-300 bg-zinc-100 flex justify-end space-x-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+            className="px-4 py-2 text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
           >
             Cancelar
           </button>
           <button
             onClick={handleExport}
-            className="px-5 py-2 bg-teal-500 hover:bg-teal-400 text-black text-sm font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.2)] flex items-center space-x-2"
+            className="px-5 py-2 bg-teal-500 hover:bg-teal-400 text-teal-900 text-sm font-bold rounded-xl transition-all shadow-lg shadow-teal-500/20 flex items-center space-x-2"
           >
             <Download className="h-4 w-4" />
             <span>Gerar Planilha</span>

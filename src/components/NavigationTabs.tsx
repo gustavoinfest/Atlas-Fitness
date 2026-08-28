@@ -67,7 +67,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
   ];
 
   return (
-    <div className="bg-[#0d0d0d] border-b border-white/5 sticky top-[69px] z-30 backdrop-blur-md">
+    <div className="bg-white border-b border-zinc-200 sticky top-[69px] z-30 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex space-x-2 sm:space-x-4 overflow-x-auto py-2 scrollbar-none" aria-label="Tabs">
           {navItems.map((item) => {
@@ -81,8 +81,8 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
                 onClick={() => onViewChange(item.id)}
                 className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-all ${
                   isActive
-                    ? 'text-teal-400 bg-teal-500/10 border border-teal-500/20 shadow-[0_0_15px_rgba(20,184,166,0.1)]'
-                    : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5 border border-transparent'
+                    ? 'text-teal-400 bg-teal-500/10 border border-teal-500/20 shadow-md shadow-teal-500/10'
+                    : 'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 border border-transparent'
                 }`}
               >
                 <Icon

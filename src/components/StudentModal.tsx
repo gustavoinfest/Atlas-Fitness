@@ -174,17 +174,17 @@ export const StudentModal: React.FC<StudentModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#0d0d0d] rounded-3xl max-w-2xl w-full shadow-2xl border border-white/10 overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 bg-zinc-50/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+      <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-zinc-300 overflow-hidden my-8">
         
         {/* Modal Header */}
-        <div className="bg-[#0a0a0a] text-white px-6 py-5 flex items-center justify-between border-b border-white/5">
+        <div className="bg-zinc-50 text-zinc-900 px-6 py-5 flex items-center justify-between border-b border-zinc-200">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center border border-teal-500/20">
               <User className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-zinc-900">
                 {initialSchedule ? 'Editar Agendamento do Aluno' : 'Novo Aluno / Horário de Aula'}
               </h3>
               <p className="text-xs text-zinc-500">
@@ -194,7 +194,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
+            className="p-1.5 rounded-xl text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
@@ -206,7 +206,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           {/* Row 1: Student Name & Modality Tab */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="relative">
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1 flex items-center justify-between">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1 flex items-center justify-between">
                 <span>Nome do Aluno *</span>
                 {clients.length > 0 && (
                   <span className="text-[10px] text-teal-400 font-mono font-normal">
@@ -242,12 +242,12 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                     setShowSuggestions(true);
                   }
                 }}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
               />
 
               {/* Suggestions Dropdown */}
               {showSuggestions && nameSuggestions.length > 0 && (
-                <div className="absolute left-0 right-0 top-full mt-1 bg-[#171717] border border-teal-500/30 rounded-xl shadow-2xl z-50 overflow-hidden max-h-48 overflow-y-auto">
+                <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-teal-500/30 rounded-xl shadow-2xl z-50 overflow-hidden max-h-48 overflow-y-auto">
                   <div className="p-1.5 bg-[#1f1f1f] text-[10px] uppercase font-mono text-teal-400 font-bold px-3">
                     Sugestões do Cadastro de Alunos:
                   </div>
@@ -265,11 +265,11 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                         }
                         setShowSuggestions(false);
                       }}
-                      className="px-3 py-2 hover:bg-teal-500/10 cursor-pointer border-b border-white/5 last:border-0 transition-colors flex items-center justify-between text-xs"
+                      className="px-3 py-2 hover:bg-teal-500/10 cursor-pointer border-b border-zinc-200 last:border-0 transition-colors flex items-center justify-between text-xs"
                     >
                       <div>
-                        <span className="font-bold text-white">{client.name}</span>
-                        <div className="text-[10px] text-zinc-400 font-mono">
+                        <span className="font-bold text-zinc-900">{client.name}</span>
+                        <div className="text-[10px] text-zinc-600 font-mono">
                           Matrícula: #{client.id} {client.professor ? `• Prof: ${client.professor}` : ''}
                         </div>
                       </div>
@@ -283,7 +283,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
             </div>
 
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Aba / Modalidade *
               </label>
               <select
@@ -295,10 +295,10 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                     handleDurationChange(found.defaultDurationMinutes || 50);
                   }
                 }}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
               >
                 {modalities.map((mod) => (
-                  <option key={mod.id} value={mod.id} className="bg-[#121212] text-slate-200">
+                  <option key={mod.id} value={mod.id} className="bg-zinc-100 text-zinc-800">
                     {mod.sheetTabName} ({mod.name})
                   </option>
                 ))}
@@ -308,7 +308,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
 
           {/* Row 2: Days of Week Selector */}
           <div>
-            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1.5">
+            <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1.5">
               Dias da Semana de Aula *
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-1.5">
@@ -321,8 +321,8 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                     onClick={() => toggleDay(day)}
                     className={`py-1.5 px-2 rounded-xl text-xs font-semibold border transition-all ${
                       isSelected
-                        ? 'bg-teal-500 text-black border-teal-500 font-bold shadow-md'
-                        : 'bg-[#121212] text-zinc-400 border-white/5 hover:border-white/20 hover:text-white'
+                        ? 'bg-teal-500 text-teal-900 border-teal-500 font-bold shadow-md'
+                        : 'bg-zinc-100 text-zinc-600 border-zinc-200 hover:border-zinc-400 hover:text-zinc-900'
                     }`}
                   >
                     {day.slice(0, 3)}
@@ -333,9 +333,9 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           </div>
 
           {/* Row 3: Schedule Times */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#121212] p-3.5 rounded-2xl border border-white/5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-zinc-100 p-3.5 rounded-2xl border border-zinc-200">
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Horário de Início *
               </label>
               <input
@@ -343,36 +343,36 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                 required
                 value={startTime}
                 onChange={(e) => handleStartTimeChange(e.target.value)}
-                className="w-full px-3 py-1.5 bg-[#0a0a0a] border border-white/10 rounded-xl text-xs text-slate-200 font-mono focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-1.5 bg-zinc-50 border border-zinc-300 rounded-xl text-xs text-zinc-800 font-mono focus:ring-teal-500 focus:border-teal-500"
               />
             </div>
 
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Duração da Aula
               </label>
               <select
                 value={durationMinutes}
                 onChange={(e) => handleDurationChange(Number(e.target.value))}
-                className="w-full px-3 py-1.5 bg-[#0a0a0a] border border-white/10 rounded-xl text-xs text-slate-200 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-1.5 bg-zinc-50 border border-zinc-300 rounded-xl text-xs text-zinc-800 focus:ring-teal-500 focus:border-teal-500"
               >
-                <option value={30} className="bg-[#121212]">30 minutos</option>
-                <option value={45} className="bg-[#121212]">45 minutos</option>
-                <option value={50} className="bg-[#121212]">50 minutos (Padrão)</option>
-                <option value={60} className="bg-[#121212]">60 minutos (1 hora)</option>
-                <option value={90} className="bg-[#121212]">90 minutos (1h 30m)</option>
+                <option value={30} className="bg-zinc-100">30 minutos</option>
+                <option value={45} className="bg-zinc-100">45 minutos</option>
+                <option value={50} className="bg-zinc-100">50 minutos (Padrão)</option>
+                <option value={60} className="bg-zinc-100">60 minutos (1 hora)</option>
+                <option value={90} className="bg-zinc-100">90 minutos (1h 30m)</option>
               </select>
             </div>
 
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Horário de Término
               </label>
               <input
                 type="time"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                className="w-full px-3 py-1.5 bg-[#0a0a0a] border border-white/10 rounded-xl text-xs text-slate-200 font-mono focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-1.5 bg-zinc-50 border border-zinc-300 rounded-xl text-xs text-zinc-800 font-mono focus:ring-teal-500 focus:border-teal-500"
               />
             </div>
           </div>
@@ -380,7 +380,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           {/* Row 4: Phone / WhatsApp & Email */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Telefone / WhatsApp (com DDD)
               </label>
               <input
@@ -388,12 +388,12 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                 placeholder="Ex: 5511999998888"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-teal-500 focus:border-teal-500"
               />
             </div>
 
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 E-mail (opcional)
               </label>
               <input
@@ -401,7 +401,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                 placeholder="aluno@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-teal-500 focus:border-teal-500"
               />
             </div>
           </div>
@@ -409,33 +409,33 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           {/* Row 5: Status, Professor, Fee */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Status da Matrícula
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as StudentStatus)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 focus:ring-teal-500 focus:border-teal-500"
               >
-                <option value="ativo" className="bg-[#121212]">Ativo</option>
-                <option value="pendente" className="bg-[#121212]">Pendente / Em teste</option>
-                <option value="ferias" className="bg-[#121212]">Em Férias</option>
-                <option value="trancado" className="bg-[#121212]">Trancado</option>
+                <option value="ativo" className="bg-zinc-100">Ativo</option>
+                <option value="pendente" className="bg-zinc-100">Pendente / Em teste</option>
+                <option value="ferias" className="bg-zinc-100">Em Férias</option>
+                <option value="trancado" className="bg-zinc-100">Trancado</option>
               </select>
             </div>
 
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Professor Responsável
               </label>
               <select
                 value={professor}
                 onChange={(e) => setProfessor(e.target.value)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 focus:ring-teal-500 focus:border-teal-500"
               >
-                <option value="" className="bg-[#121212]">Selecione um profissional...</option>
+                <option value="" className="bg-zinc-100">Selecione um profissional...</option>
                 {professionals.filter(p => p.role === 'Professor' || p.role === 'Personal').map(prof => (
-                  <option key={prof.id} value={prof.name} className="bg-[#121212]">
+                  <option key={prof.id} value={prof.name} className="bg-zinc-100">
                     {prof.name}
                   </option>
                 ))}
@@ -443,7 +443,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
             </div>
 
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Valor Mensal (R$)
               </label>
               <input
@@ -451,7 +451,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                 placeholder="Ex: 320"
                 value={monthlyFee}
                 onChange={(e) => setMonthlyFee(e.target.value)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-teal-500 focus:border-teal-500"
               />
             </div>
           </div>
@@ -459,7 +459,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           {/* Row 6: Location & Health Notes */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Espaço / Sala / Aparelho
               </label>
               <input
@@ -467,26 +467,26 @@ export const StudentModal: React.FC<StudentModalProps> = ({
                 placeholder="Ex: Estúdio 1 - Reformer 2"
                 value={roomOrLocation}
                 onChange={(e) => setRoomOrLocation(e.target.value)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-teal-500 focus:border-teal-500"
               />
             </div>
 
             <div>
-              <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+              <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
                 Data de Início
               </label>
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 font-mono focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 font-mono focus:ring-teal-500 focus:border-teal-500"
               />
             </div>
           </div>
 
           {/* Row 7: Observations */}
           <div>
-            <label className="block font-bold text-zinc-400 uppercase tracking-wider text-[10px] mb-1">
+            <label className="block font-bold text-zinc-600 uppercase tracking-wider text-[10px] mb-1">
               Observações, Restrições de Saúde ou Metas
             </label>
             <textarea
@@ -494,22 +494,22 @@ export const StudentModal: React.FC<StudentModalProps> = ({
               placeholder="Ex: Hérnia de disco, gestante, foco em postura, objetivo emagrecimento..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 bg-[#121212] border border-white/10 rounded-xl text-xs text-slate-200 placeholder:text-zinc-600 focus:ring-teal-500 focus:border-teal-500"
+              className="w-full px-3 py-2 bg-zinc-100 border border-zinc-300 rounded-xl text-xs text-zinc-800 placeholder:text-zinc-400 focus:ring-teal-500 focus:border-teal-500"
             />
           </div>
 
           {/* Modal Footer Actions */}
-          <div className="pt-4 border-t border-white/5 flex items-center justify-end space-x-3">
+          <div className="pt-4 border-t border-zinc-200 flex items-center justify-end space-x-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 font-semibold transition-colors"
+              className="px-4 py-2 rounded-xl border border-zinc-300 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 font-semibold transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 font-bold shadow-lg uppercase tracking-wider transition-all"
+              className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-white text-teal-900 hover:bg-zinc-200 font-bold shadow-lg uppercase tracking-wider transition-all"
             >
               <Save className="h-4 w-4" />
               <span>{initialSchedule ? 'Salvar Alterações' : 'Cadastrar Aluno'}</span>

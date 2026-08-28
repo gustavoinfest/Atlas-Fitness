@@ -159,16 +159,16 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
     <div className="space-y-4">
       
       {/* Top Banner with Key Directory Metrics */}
-      <div className="bg-[#0d0d0d] rounded-2xl p-4 border border-white/5 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-white rounded-2xl p-4 border border-zinc-200 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         
         {/* Navigation Sub-Tabs */}
-        <div className="flex items-center space-x-2 bg-[#121212] p-1 rounded-xl border border-white/5">
+        <div className="flex items-center space-x-2 bg-zinc-100 p-1 rounded-xl border border-zinc-200">
           <button
             onClick={() => setActiveSubTab('directory')}
             className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${
               activeSubTab === 'directory'
-                ? 'bg-teal-500 text-black shadow-lg font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-teal-500 text-teal-900 shadow-lg font-bold'
+                : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
             <Users className="h-3.5 w-3.5" />
@@ -179,8 +179,8 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
             onClick={() => setActiveSubTab('schedules')}
             className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${
               activeSubTab === 'schedules'
-                ? 'bg-teal-500 text-black shadow-lg font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-teal-500 text-teal-900 shadow-lg font-bold'
+                : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
             <Calendar className="h-3.5 w-3.5" />
@@ -190,25 +190,25 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
 
         {/* Quick Summary Counts */}
         <div className="flex items-center flex-wrap gap-2 text-xs font-mono">
-          <div className="bg-[#121212] px-3 py-1.5 rounded-xl border border-white/5 flex items-center space-x-1.5">
+          <div className="bg-zinc-100 px-3 py-1.5 rounded-xl border border-zinc-200 flex items-center space-x-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
             <span className="text-zinc-500">Ativos:</span>
-            <span className="text-white font-bold">{activeClients}</span>
+            <span className="text-zinc-900 font-bold">{activeClients}</span>
           </div>
 
           {blockedClients > 0 && (
-            <div className="bg-[#121212] px-3 py-1.5 rounded-xl border border-white/5 flex items-center space-x-1.5">
+            <div className="bg-zinc-100 px-3 py-1.5 rounded-xl border border-zinc-200 flex items-center space-x-1.5">
               <span className="w-2 h-2 rounded-full bg-rose-400"></span>
               <span className="text-zinc-500">Bloqueados:</span>
-              <span className="text-white font-bold">{blockedClients}</span>
+              <span className="text-zinc-900 font-bold">{blockedClients}</span>
             </div>
           )}
 
           {suspendedClients > 0 && (
-            <div className="bg-[#121212] px-3 py-1.5 rounded-xl border border-white/5 flex items-center space-x-1.5">
+            <div className="bg-zinc-100 px-3 py-1.5 rounded-xl border border-zinc-200 flex items-center space-x-1.5">
               <span className="w-2 h-2 rounded-full bg-amber-400"></span>
               <span className="text-zinc-500">Suspensos:</span>
-              <span className="text-white font-bold">{suspendedClients}</span>
+              <span className="text-zinc-900 font-bold">{suspendedClients}</span>
             </div>
           )}
 
@@ -224,7 +224,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
 
           <button
             onClick={handleExportClientsExcel}
-            className="flex items-center space-x-1.5 bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 px-3 py-1.5 rounded-xl text-xs font-medium transition-all"
+            className="flex items-center space-x-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 border border-zinc-300 px-3 py-1.5 rounded-xl text-xs font-medium transition-all"
             title="Baixar lista em Excel"
           >
             <Download className="h-3.5 w-3.5" />
@@ -235,7 +235,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-[#0d0d0d] rounded-2xl p-4 border border-white/5 shadow-lg">
+      <div className="bg-white rounded-2xl p-4 border border-zinc-200 shadow-lg">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           
           {/* Search bar */}
@@ -250,7 +250,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
               }
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#121212] border border-white/10 text-slate-200 placeholder:text-zinc-600 rounded-xl focus:ring-teal-500 focus:border-teal-500"
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-zinc-100 border border-zinc-300 text-zinc-800 placeholder:text-zinc-400 rounded-xl focus:ring-teal-500 focus:border-teal-500"
             />
           </div>
 
@@ -261,7 +261,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-[#121212] border border-white/10 text-slate-200 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500"
+              className="bg-zinc-100 border border-zinc-300 text-zinc-800 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500"
             >
               <option value="all">Todos os Status</option>
               <option value="Ativo">Ativo</option>
@@ -278,7 +278,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                   <select
                     value={professorFilter}
                     onChange={(e) => setProfessorFilter(e.target.value)}
-                    className="bg-[#121212] border border-white/10 text-slate-200 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500 max-w-[160px] truncate"
+                    className="bg-zinc-100 border border-zinc-300 text-zinc-800 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500 max-w-[160px] truncate"
                   >
                     <option value="all">Todos Professores</option>
                     {uniqueProfessors.map((p) => (
@@ -293,7 +293,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                   <select
                     value={consultorFilter}
                     onChange={(e) => setConsultorFilter(e.target.value)}
-                    className="bg-[#121212] border border-white/10 text-slate-200 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500 max-w-[160px] truncate"
+                    className="bg-zinc-100 border border-zinc-300 text-zinc-800 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500 max-w-[160px] truncate"
                   >
                     <option value="all">Todos Consultores</option>
                     {uniqueConsultores.map((c) => (
@@ -312,7 +312,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                 <select
                   value={modalityFilter}
                   onChange={(e) => setModalityFilter(e.target.value)}
-                  className="bg-[#121212] border border-white/10 text-slate-200 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500"
+                  className="bg-zinc-100 border border-zinc-300 text-zinc-800 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500"
                 >
                   <option value="all">Todas as Modalidades</option>
                   {modalities.map((m) => (
@@ -325,7 +325,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                 <select
                   value={dayFilter}
                   onChange={(e) => setDayFilter(e.target.value)}
-                  className="bg-[#121212] border border-white/10 text-slate-200 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500"
+                  className="bg-zinc-100 border border-zinc-300 text-zinc-800 text-xs rounded-xl px-2.5 py-1.5 focus:ring-teal-500"
                 >
                   <option value="all">Qualquer Dia</option>
                   <option value="Segunda">Segunda</option>
@@ -342,7 +342,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
             {/* Add New Button */}
             <button
               onClick={onAddNewStudent}
-              className="flex items-center space-x-1.5 bg-white text-black hover:bg-zinc-200 px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-lg uppercase tracking-wider transition-all"
+              className="flex items-center space-x-1.5 bg-white text-teal-900 hover:bg-zinc-200 px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-lg uppercase tracking-wider transition-all"
             >
               <Plus className="h-3.5 w-3.5" />
               <span>Novo Agendamento</span>
@@ -356,10 +356,10 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
       {/* SUB-TAB 1: GENERAL CLIENT DIRECTORY TABLE (340+ CLIENTS)                  */}
       {/* ========================================================================= */}
       {activeSubTab === 'directory' && (
-        <div className="bg-[#0d0d0d] rounded-2xl border border-white/5 shadow-xl overflow-hidden">
+        <div className="bg-white rounded-2xl border border-zinc-200 shadow-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#121212] border-b border-white/5 text-[10px] uppercase font-mono text-zinc-400">
+              <thead className="bg-zinc-100 border-b border-zinc-200 text-[10px] uppercase font-mono text-zinc-600">
                 <tr>
                   <th className="py-3 px-4">Aluno / Cliente</th>
                   <th className="py-3 px-4">Matrícula</th>
@@ -370,7 +370,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                   <th className="py-3 px-4 text-right">Ações</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-zinc-200">
                 {filteredClients.map((client) => {
                   const isScheduled = schedules.some((s) => s.studentName.toLowerCase() === client.name.toLowerCase());
                   const isBlocked = client.status.toLowerCase().includes('bloque');
@@ -378,16 +378,16 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                   const isInative = client.status.toLowerCase().includes('inativ');
 
                   return (
-                    <tr key={client.id} className="hover:bg-white/5 transition-colors group">
+                    <tr key={client.id} className="hover:bg-zinc-100 transition-colors group">
                       
                       {/* Name & Badge */}
                       <td className="py-3 px-4">
                         <div className="flex items-center space-x-2.5">
-                          <div className="h-8 w-8 rounded-xl bg-[#171717] border border-white/5 flex items-center justify-center font-bold text-teal-400 text-xs shrink-0">
+                          <div className="h-8 w-8 rounded-xl bg-white border border-zinc-200 flex items-center justify-center font-bold text-teal-400 text-xs shrink-0">
                             {client.name.charAt(0)}
                           </div>
                           <div>
-                            <div className="font-bold text-white text-xs leading-snug flex items-center space-x-2">
+                            <div className="font-bold text-zinc-900 text-xs leading-snug flex items-center space-x-2">
                               <span>{client.name}</span>
                               {isScheduled && (
                                 <span className="px-1.5 py-0.2 rounded bg-teal-500/10 text-teal-400 text-[10px] font-mono border border-teal-500/20">
@@ -403,23 +403,23 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                       </td>
 
                       {/* Matrícula ID */}
-                      <td className="py-3 px-4 font-mono text-zinc-300 text-xs font-semibold">
+                      <td className="py-3 px-4 font-mono text-zinc-700 text-xs font-semibold">
                         #{client.id}
                       </td>
 
                       {/* Professor */}
-                      <td className="py-3 px-4 text-zinc-300 text-xs">
-                        {client.professor || <span className="text-zinc-600">-</span>}
+                      <td className="py-3 px-4 text-zinc-700 text-xs">
+                        {client.professor || <span className="text-zinc-400">-</span>}
                       </td>
 
                       {/* Consultor */}
-                      <td className="py-3 px-4 text-zinc-400 text-xs">
-                        {client.consultor || <span className="text-zinc-600">-</span>}
+                      <td className="py-3 px-4 text-zinc-600 text-xs">
+                        {client.consultor || <span className="text-zinc-400">-</span>}
                       </td>
 
                       {/* Personal */}
-                      <td className="py-3 px-4 text-zinc-400 text-xs">
-                        {client.personal || <span className="text-zinc-600">-</span>}
+                      <td className="py-3 px-4 text-zinc-600 text-xs">
+                        {client.personal || <span className="text-zinc-400">-</span>}
                       </td>
 
                       {/* Status Selector */}
@@ -433,15 +433,15 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                               : isSuspended
                               ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
                               : isInative
-                              ? 'bg-zinc-800 text-zinc-400 border-zinc-700'
+                              ? 'bg-zinc-800 text-zinc-600 border-zinc-700'
                               : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
                           }`}
                         >
-                          <option value="Ativo" className="bg-[#121212] text-emerald-400">Ativo</option>
-                          <option value="Inativo" className="bg-[#121212] text-zinc-400">Inativo</option>
-                          <option value="Bloqueado" className="bg-[#121212] text-rose-400">Bloqueado</option>
-                          <option value="Suspenso" className="bg-[#121212] text-amber-300">Suspenso</option>
-                          <option value="Pendente" className="bg-[#121212] text-sky-400">Pendente</option>
+                          <option value="Ativo" className="bg-zinc-100 text-emerald-400">Ativo</option>
+                          <option value="Inativo" className="bg-zinc-100 text-zinc-600">Inativo</option>
+                          <option value="Bloqueado" className="bg-zinc-100 text-rose-400">Bloqueado</option>
+                          <option value="Suspenso" className="bg-zinc-100 text-amber-300">Suspenso</option>
+                          <option value="Pendente" className="bg-zinc-100 text-sky-400">Pendente</option>
                         </select>
                       </td>
 
@@ -450,7 +450,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                         <div className="flex items-center justify-end space-x-1.5">
                           <button
                             onClick={() => onScheduleClient(client)}
-                            className="flex items-center space-x-1 bg-white/5 hover:bg-teal-500/20 text-zinc-300 hover:text-teal-300 border border-white/10 px-2.5 py-1 rounded-lg text-xs font-medium transition-all"
+                            className="flex items-center space-x-1 bg-zinc-100 hover:bg-teal-500/20 text-zinc-700 hover:text-teal-300 border border-zinc-300 px-2.5 py-1 rounded-lg text-xs font-medium transition-all"
                             title="Agendar horário na agenda de modalidades"
                           >
                             <span>Agendar</span>
@@ -463,7 +463,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                                 onDeleteClient(client.id);
                               }
                             }}
-                            className="p-1 rounded-lg text-zinc-600 hover:text-rose-400 hover:bg-rose-500/10 transition-colors opacity-0 group-hover:opacity-100"
+                            className="p-1 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors opacity-0 group-hover:opacity-100"
                             title="Excluir"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
@@ -480,13 +480,13 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
 
           {filteredClients.length === 0 && (
             <div className="p-12 text-center">
-              <Users className="h-10 w-10 text-zinc-600 mx-auto mb-2" />
-              <h3 className="text-sm font-semibold text-zinc-300">Nenhum aluno encontrado no cadastro</h3>
+              <Users className="h-10 w-10 text-zinc-400 mx-auto mb-2" />
+              <h3 className="text-sm font-semibold text-zinc-700">Nenhum aluno encontrado no cadastro</h3>
               <p className="text-xs text-zinc-500 mt-1">Tente ajustar a busca ou importe uma nova planilha de alunos.</p>
             </div>
           )}
 
-          <div className="p-3 bg-[#121212] border-t border-white/5 flex items-center justify-between text-xs text-zinc-500 font-mono">
+          <div className="p-3 bg-zinc-100 border-t border-zinc-200 flex items-center justify-between text-xs text-zinc-500 font-mono">
             <span>Exibindo {filteredClients.length} de {clients.length} alunos cadastrados</span>
             <span>Limite por horário no Glúteo Zone: 4 alunas</span>
           </div>
@@ -504,21 +504,21 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
             return (
               <div
                 key={schedule.id}
-                className="bg-[#0d0d0d] rounded-2xl border border-white/5 p-4 shadow-md hover:border-teal-500/30 transition-all flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-zinc-200 p-4 shadow-md hover:border-teal-500/30 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center space-x-2.5">
-                      <div className="h-9 w-9 rounded-xl bg-[#171717] border border-white/5 flex items-center justify-center font-bold text-teal-400 text-sm shrink-0">
+                      <div className="h-9 w-9 rounded-xl bg-white border border-zinc-200 flex items-center justify-center font-bold text-teal-400 text-sm shrink-0">
                         {schedule.studentName.charAt(0)}
                       </div>
                       <div>
-                        <h3 className="font-bold text-white text-sm leading-snug">
+                        <h3 className="font-bold text-zinc-900 text-sm leading-snug">
                           {schedule.studentName}
                         </h3>
                         <div className="flex items-center space-x-1.5 mt-0.5">
                           <span
-                            className="px-1.5 py-0.2 rounded text-[10px] font-semibold text-white inline-block"
+                            className="px-1.5 py-0.2 rounded text-[10px] font-semibold text-zinc-900 inline-block"
                             style={{ backgroundColor: modColor }}
                           >
                             Aba: {schedule.modalityName}
@@ -540,17 +540,17 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                           ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
                           : schedule.status === 'ferias'
                           ? 'bg-sky-500/10 text-sky-400 border-sky-500/30'
-                          : 'bg-zinc-800 text-zinc-400 border-zinc-700'
+                          : 'bg-zinc-800 text-zinc-600 border-zinc-700'
                       }`}
                     >
-                      <option value="ativo" className="bg-[#121212] text-emerald-400">Ativo</option>
-                      <option value="pendente" className="bg-[#121212] text-amber-300">Pendente</option>
-                      <option value="ferias" className="bg-[#121212] text-sky-400">Férias</option>
-                      <option value="trancado" className="bg-[#121212] text-zinc-400">Trancado</option>
+                      <option value="ativo" className="bg-zinc-100 text-emerald-400">Ativo</option>
+                      <option value="pendente" className="bg-zinc-100 text-amber-300">Pendente</option>
+                      <option value="ferias" className="bg-zinc-100 text-sky-400">Férias</option>
+                      <option value="trancado" className="bg-zinc-100 text-zinc-600">Trancado</option>
                     </select>
                   </div>
 
-                  <div className="mt-3 bg-[#121212] rounded-xl p-3 border border-white/5 space-y-1.5 text-xs">
+                  <div className="mt-3 bg-zinc-100 rounded-xl p-3 border border-zinc-200 space-y-1.5 text-xs">
                     <div className="flex items-center justify-between">
                       <span className="text-zinc-500 flex items-center text-[11px]">
                         <Calendar className="h-3.5 w-3.5 mr-1 text-zinc-500" />
@@ -560,7 +560,7 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                         {schedule.daysOfWeek.map((day) => (
                           <span
                             key={day}
-                            className="px-1.5 py-0.2 rounded-lg bg-white/5 text-zinc-300 text-[10px] font-medium border border-white/5"
+                            className="px-1.5 py-0.2 rounded-lg bg-zinc-100 text-zinc-700 text-[10px] font-medium border border-zinc-200"
                           >
                             {day}
                           </span>
@@ -573,20 +573,20 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                         <Clock className="h-3.5 w-3.5 mr-1 text-zinc-500" />
                         Horário:
                       </span>
-                      <span className="font-semibold text-zinc-200 font-mono">
+                      <span className="font-semibold text-zinc-800 font-mono">
                         {schedule.startTime} - {schedule.endTime} ({schedule.durationMinutes} min)
                       </span>
                     </div>
                   </div>
 
                   {schedule.notes && (
-                    <p className="text-[11px] text-zinc-400 mt-2 bg-amber-500/5 p-2 rounded-xl border border-amber-500/20">
+                    <p className="text-[11px] text-zinc-600 mt-2 bg-amber-500/5 p-2 rounded-xl border border-amber-500/20">
                       <span className="font-semibold text-amber-300">Obs:</span> {schedule.notes}
                     </p>
                   )}
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+                <div className="mt-4 pt-3 border-t border-zinc-200 flex items-center justify-between">
                   {schedule.phone ? (
                     <button
                       type="button"
@@ -603,13 +603,13 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
                       <span>WhatsApp</span>
                     </button>
                   ) : (
-                    <span className="text-[11px] text-zinc-600 font-mono">Sem telefone</span>
+                    <span className="text-[11px] text-zinc-400 font-mono">Sem telefone</span>
                   )}
 
                   <div className="flex items-center space-x-1">
                     <button
                       onClick={() => onEditStudent(schedule)}
-                      className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
+                      className="p-1.5 rounded-lg text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
                       title="Editar"
                     >
                       <Edit3 className="h-4 w-4" />
@@ -633,9 +633,9 @@ export const StudentsListView: React.FC<StudentsListViewProps> = ({
           })}
 
           {filteredSchedules.length === 0 && (
-            <div className="col-span-full bg-[#0d0d0d] rounded-2xl border border-white/5 p-12 text-center shadow-xl">
-              <Users className="h-10 w-10 text-zinc-600 mx-auto mb-2" />
-              <h3 className="text-sm font-semibold text-zinc-300">Nenhum aluno agendado com esses filtros</h3>
+            <div className="col-span-full bg-white rounded-2xl border border-zinc-200 p-12 text-center shadow-xl">
+              <Users className="h-10 w-10 text-zinc-400 mx-auto mb-2" />
+              <h3 className="text-sm font-semibold text-zinc-700">Nenhum aluno agendado com esses filtros</h3>
               <p className="text-xs text-zinc-500 mt-1">Selecione um aluno do Cadastro Geral e clique em "Agendar".</p>
             </div>
           )}

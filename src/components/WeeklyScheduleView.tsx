@@ -118,7 +118,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
   return (
     <div className="space-y-4">
       {/* Controls and Filter Bar */}
-      <div className="bg-[#0d0d0d] rounded-2xl p-4 border border-white/5 shadow-lg">
+      <div className="bg-white rounded-2xl p-4 border border-zinc-200 shadow-lg">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3.5">
           
           {/* Modality Filter Pills */}
@@ -131,8 +131,8 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
               onClick={() => setSelectedModalityId('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap ${
                 selectedModalityId === 'all'
-                  ? 'bg-white text-black shadow-md'
-                  : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5'
+                  ? 'bg-white text-teal-900 shadow-md'
+                  : 'bg-zinc-100 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200 border border-zinc-200'
               }`}
             >
               Todas as Modalidades
@@ -145,8 +145,8 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
                   onClick={() => setSelectedModalityId(mod.id)}
                   className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap border ${
                     isSelected
-                      ? 'text-white shadow-[0_0_12px_rgba(20,184,166,0.25)] border-white/30'
-                      : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border-white/5'
+                      ? 'text-zinc-900 shadow-[0_0_12px_rgba(20,184,166,0.25)] border-zinc-500'
+                      : 'bg-zinc-100 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200 border-zinc-200'
                   }`}
                   style={{
                     backgroundColor: isSelected ? mod.color : undefined,
@@ -165,11 +165,11 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
           {/* Secondary Filters (Day of week, Time of Day, Active only) */}
           <div className="flex items-center flex-wrap gap-2 text-xs">
             {/* Shift filter */}
-            <div className="flex items-center bg-[#121212] p-1 rounded-xl border border-white/5 font-medium">
+            <div className="flex items-center bg-zinc-100 p-1 rounded-xl border border-zinc-200 font-medium">
               <button
                 onClick={() => setTimeFilter('all')}
                 className={`px-2.5 py-1 rounded-lg transition-all ${
-                  timeFilter === 'all' ? 'bg-white/10 text-white font-semibold shadow-xs' : 'text-zinc-500 hover:text-zinc-300'
+                  timeFilter === 'all' ? 'bg-zinc-200 text-zinc-900 font-semibold shadow-xs' : 'text-zinc-500 hover:text-zinc-700'
                 }`}
               >
                 Todo o Dia
@@ -177,7 +177,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
               <button
                 onClick={() => setTimeFilter('morning')}
                 className={`px-2.5 py-1 rounded-lg transition-all ${
-                  timeFilter === 'morning' ? 'bg-white/10 text-white font-semibold shadow-xs' : 'text-zinc-500 hover:text-zinc-300'
+                  timeFilter === 'morning' ? 'bg-zinc-200 text-zinc-900 font-semibold shadow-xs' : 'text-zinc-500 hover:text-zinc-700'
                 }`}
               >
                 Manhã
@@ -185,7 +185,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
               <button
                 onClick={() => setTimeFilter('afternoon')}
                 className={`px-2.5 py-1 rounded-lg transition-all ${
-                  timeFilter === 'afternoon' ? 'bg-white/10 text-white font-semibold shadow-xs' : 'text-zinc-500 hover:text-zinc-300'
+                  timeFilter === 'afternoon' ? 'bg-zinc-200 text-zinc-900 font-semibold shadow-xs' : 'text-zinc-500 hover:text-zinc-700'
                 }`}
               >
                 Tarde
@@ -193,7 +193,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
               <button
                 onClick={() => setTimeFilter('evening')}
                 className={`px-2.5 py-1 rounded-lg transition-all ${
-                  timeFilter === 'evening' ? 'bg-white/10 text-white font-semibold shadow-xs' : 'text-zinc-500 hover:text-zinc-300'
+                  timeFilter === 'evening' ? 'bg-zinc-200 text-zinc-900 font-semibold shadow-xs' : 'text-zinc-500 hover:text-zinc-700'
                 }`}
               >
                 Noite
@@ -204,7 +204,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
             <select
               value={selectedDayFilter}
               onChange={(e) => setSelectedDayFilter(e.target.value)}
-              className="bg-[#121212] border border-white/10 text-slate-200 text-xs rounded-xl px-3 py-1.5 focus:ring-teal-500 focus:border-teal-500"
+              className="bg-zinc-100 border border-zinc-300 text-zinc-800 text-xs rounded-xl px-3 py-1.5 focus:ring-teal-500 focus:border-teal-500"
             >
               <option value="all">Semana Completa</option>
               {ALL_DAYS.map((day) => (
@@ -215,12 +215,12 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
             </select>
 
             {/* Active only checkbox */}
-            <label className="flex items-center space-x-1.5 cursor-pointer text-zinc-400 hover:text-zinc-200 px-2 py-1 select-none">
+            <label className="flex items-center space-x-1.5 cursor-pointer text-zinc-600 hover:text-zinc-800 px-2 py-1 select-none">
               <input
                 type="checkbox"
                 checked={showOnlyActive}
                 onChange={(e) => setShowOnlyActive(e.target.checked)}
-                className="rounded border-white/20 bg-[#121212] text-teal-500 focus:ring-teal-500 h-3.5 w-3.5"
+                className="rounded border-zinc-400 bg-zinc-100 text-teal-500 focus:ring-teal-500 h-3.5 w-3.5"
               />
               <span>Apenas Ativos</span>
             </label>
@@ -238,7 +238,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
           <div>
             <span className="font-bold text-amber-200">Atenção Glúteo Zone:</span>{' '}
             <span className="text-amber-300/90">
-              Como ainda não temos horários fixos, cuidar na hora de agendar e colocar no <strong className="text-white">máximo 4 alunas</strong> por horário.
+              Como ainda não temos horários fixos, cuidar na hora de agendar e colocar no <strong className="text-zinc-900">máximo 4 alunas</strong> por horário.
             </span>
           </div>
         </div>
@@ -248,12 +248,12 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
       </div>
 
       {/* Weekly Grid */}
-      <div className="bg-[#0d0d0d] rounded-2xl border border-white/5 shadow-xl overflow-hidden">
+      <div className="bg-white rounded-2xl border border-zinc-200 shadow-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left min-w-[760px]">
             <thead>
-              <tr className="bg-[#0a0a0a] border-b border-white/5">
-                <th className="py-3.5 px-3 w-20 text-center text-xs font-semibold text-zinc-500 border-r border-white/5 font-mono">
+              <tr className="bg-zinc-50 border-b border-zinc-200">
+                <th className="py-3.5 px-3 w-20 text-center text-xs font-semibold text-zinc-500 border-r border-zinc-200 font-mono">
                   <Clock className="h-4 w-4 mx-auto text-zinc-500" />
                 </th>
                 {displayedDays.map((day) => {
@@ -261,10 +261,10 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
                   return (
                     <th
                       key={day}
-                      className="py-3.5 px-3 text-xs font-semibold text-zinc-300 border-r border-white/5 last:border-r-0 min-w-[130px]"
+                      className="py-3.5 px-3 text-xs font-semibold text-zinc-700 border-r border-zinc-200 last:border-r-0 min-w-[130px]"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="tracking-wide uppercase text-[11px] text-zinc-400">{day}</span>
+                        <span className="tracking-wide uppercase text-[11px] text-zinc-600">{day}</span>
                         <span className="text-[10px] font-mono font-medium text-teal-400 bg-teal-500/10 border border-teal-500/20 px-1.5 py-0.2 rounded-full">
                           {daySchedules.length}
                         </span>
@@ -274,11 +274,11 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-zinc-200">
               {displayedHours.map((hour) => (
                 <tr key={hour} className="hover:bg-white/[0.015] transition-colors group">
                   {/* Time slot header */}
-                  <td className="py-2.5 px-2 text-center text-xs font-mono text-zinc-600 bg-[#0a0a0a]/50 border-r border-white/5 select-none align-top">
+                  <td className="py-2.5 px-2 text-center text-xs font-mono text-zinc-400 bg-zinc-50/50 border-r border-zinc-200 select-none align-top">
                     {hour}
                   </td>
 
@@ -291,7 +291,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
                     return (
                       <td
                         key={`${day}-${hour}`}
-                        className={`py-1.5 px-1.5 border-r border-white/5 last:border-r-0 align-top relative ${
+                        className={`py-1.5 px-1.5 border-r border-zinc-200 last:border-r-0 align-top relative ${
                           hasConflict ? 'bg-amber-500/[0.03]' : ''
                         }`}
                       >
@@ -299,7 +299,7 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
                         {slotSchedules.length === 0 && (
                           <div
                             onClick={() => onAddNewForSlot?.(day, hour)}
-                            className="h-8 rounded-xl border border-dashed border-white/5 group-hover:border-white/10 hover:!border-teal-400/40 hover:bg-teal-500/10 flex items-center justify-center cursor-pointer transition-all opacity-0 group-hover:opacity-100"
+                            className="h-8 rounded-xl border border-dashed border-zinc-200 group-hover:border-zinc-300 hover:!border-teal-400/40 hover:bg-teal-500/10 flex items-center justify-center cursor-pointer transition-all opacity-0 group-hover:opacity-100"
                             title={`Agendar aluno na ${day} às ${hour}`}
                           >
                             <Plus className="h-3.5 w-3.5 text-teal-400" />
@@ -308,93 +308,111 @@ export const WeeklyScheduleView: React.FC<WeeklyScheduleViewProps> = ({
 
                         {/* Render class cards that start at this hour */}
                         <div className="space-y-1.5">
-                          {isStartingSlot.map((schedule) => {
-                            const modColor = getModalityColor(schedule.modalityId);
+                          {(() => {
+                            // Group schedules by modality, professor, and exact time slot
+                            const grouped = isStartingSlot.reduce((acc, schedule) => {
+                              const key = `${schedule.modalityId}-${schedule.professor || 'sem-prof'}-${schedule.startTime}-${schedule.endTime}`;
+                              if (!acc[key]) {
+                                acc[key] = {
+                                  modalityId: schedule.modalityId,
+                                  modalityName: schedule.modalityName,
+                                  professor: schedule.professor,
+                                  startTime: schedule.startTime,
+                                  endTime: schedule.endTime,
+                                  roomOrLocation: schedule.roomOrLocation,
+                                  students: []
+                                };
+                              }
+                              acc[key].students.push(schedule);
+                              return acc;
+                            }, {} as Record<string, any>);
 
-                            return (
-                              <div
-                                key={schedule.id}
-                                onClick={() => onEditSchedule(schedule)}
-                                className="group/card relative rounded-xl p-2.5 text-xs border border-white/5 hover:border-teal-500/30 transition-all cursor-pointer bg-[#121212] shadow-sm hover:shadow-[0_0_15px_rgba(20,184,166,0.1)]"
-                                style={{
-                                  borderLeftWidth: '3px',
-                                  borderLeftColor: modColor,
-                                }}
-                              >
-                                {/* Header: Student name & Modality */}
-                                <div className="flex items-start justify-between gap-1">
-                                  <span className="font-semibold text-white truncate" title={schedule.studentName}>
-                                    {schedule.studentName}
-                                  </span>
-                                  {schedule.status !== 'ativo' && (
-                                    <span className="px-1.5 py-0.2 rounded text-[9px] uppercase font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                                      {schedule.status}
-                                    </span>
-                                  )}
-                                </div>
+                            return Object.values(grouped).map((group: any, idx: number) => {
+                              const modColor = getModalityColor(group.modalityId);
 
-                                {/* Modality Tag */}
-                                <div className="flex items-center space-x-1.5 mt-1">
-                                  <span
-                                    className="px-1.5 py-0.2 rounded text-[10px] font-semibold text-white tracking-wide"
-                                    style={{ backgroundColor: modColor }}
-                                  >
-                                    {schedule.modalityName}
-                                  </span>
-                                  <span className="text-[11px] font-mono text-zinc-500">
-                                    {schedule.startTime} - {schedule.endTime}
-                                  </span>
-                                </div>
-
-                                {/* Location or Room */}
-                                {schedule.roomOrLocation && (
-                                  <div className="flex items-center text-[11px] text-zinc-400 mt-1 truncate">
-                                    <MapPin className="h-3 w-3 mr-1 text-zinc-500 shrink-0" />
-                                    <span className="truncate">{schedule.roomOrLocation}</span>
-                                  </div>
-                                )}
-
-                                {/* Card Actions (WhatsApp, Edit) */}
-                                <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-white/5">
-                                  <span className="text-[10px] text-zinc-500 truncate font-mono">
-                                    {schedule.professor ? `Prof. ${schedule.professor.replace('Prof. ', '').replace('Profª. ', '')}` : ''}
-                                  </span>
-                                  
-                                  <div className="flex items-center space-x-1">
-                                    {schedule.phone && (
-                                      <button
-                                        type="button"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          openWhatsApp(
-                                            schedule.phone,
-                                            schedule.studentName,
-                                            schedule.modalityName,
-                                            schedule.startTime
-                                          );
-                                        }}
-                                        className="p-1 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"
-                                        title="Enviar mensagem no WhatsApp"
-                                      >
-                                        <MessageCircle className="h-3 w-3" />
-                                      </button>
-                                    )}
-                                    <button
-                                      type="button"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        onEditSchedule(schedule);
-                                      }}
-                                      className="p-1 rounded-lg bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
-                                      title="Editar ficha"
+                              return (
+                                <div
+                                  key={idx}
+                                  className="group/card relative rounded-xl p-2 text-xs border border-zinc-200 hover:border-teal-500/30 transition-all bg-zinc-100 shadow-sm hover:shadow-md shadow-teal-500/10"
+                                  style={{
+                                    borderLeftWidth: '3px',
+                                    borderLeftColor: modColor,
+                                  }}
+                                >
+                                  {/* Header: Modality Tag */}
+                                  <div className="flex items-start justify-between gap-1 mb-1.5">
+                                    <span
+                                      className="px-1.5 py-0.5 rounded text-[10px] font-bold text-zinc-900 tracking-wider truncate"
+                                      style={{ backgroundColor: modColor }}
                                     >
-                                      <ChevronRight className="h-3 w-3" />
-                                    </button>
+                                      {group.modalityName}
+                                    </span>
+                                    <span className="text-[10px] font-mono text-zinc-500 shrink-0">
+                                      {group.startTime} - {group.endTime}
+                                    </span>
+                                  </div>
+
+                                  {/* Student List */}
+                                  <div className="space-y-0.5 mb-2">
+                                    {group.students.map((schedule: any) => (
+                                      <div
+                                        key={schedule.id}
+                                        onClick={() => onEditSchedule(schedule)}
+                                        className="flex items-center justify-between p-1.5 rounded-lg hover:bg-zinc-200 cursor-pointer group/student transition-colors"
+                                      >
+                                        <div className="flex items-center space-x-1.5 overflow-hidden">
+                                          <User className="h-3 w-3 text-zinc-500 shrink-0" />
+                                          <span className="text-zinc-900 font-medium text-[11px] truncate" title={schedule.studentName}>
+                                            {schedule.studentName}
+                                          </span>
+                                          {schedule.status !== 'ativo' && (
+                                            <span className="px-1 py-0.5 rounded text-[8px] uppercase font-mono font-bold bg-amber-500/20 text-amber-300">
+                                              {schedule.status}
+                                            </span>
+                                          )}
+                                        </div>
+                                        
+                                        <div className="flex items-center space-x-1 opacity-0 group-hover/student:opacity-100 transition-opacity">
+                                          {schedule.phone && (
+                                            <button
+                                              type="button"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                openWhatsApp(
+                                                  schedule.phone,
+                                                  schedule.studentName,
+                                                  schedule.modalityName,
+                                                  schedule.startTime
+                                                );
+                                              }}
+                                              className="p-1 rounded bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+                                              title="WhatsApp"
+                                            >
+                                              <MessageCircle className="h-3 w-3" />
+                                            </button>
+                                          )}
+                                          <ChevronRight className="h-3 w-3 text-zinc-500" />
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  {/* Footer: Professor & Location */}
+                                  <div className="flex items-center justify-between pt-1.5 border-t border-zinc-200">
+                                    <span className="text-[10px] text-zinc-500 font-mono truncate">
+                                      {group.professor ? `Prof. ${group.professor.replace('Prof. ', '').replace('Profª. ', '')}` : ''}
+                                    </span>
+                                    {group.roomOrLocation && (
+                                      <div className="flex items-center text-[10px] text-zinc-600 truncate max-w-[50%]">
+                                        <MapPin className="h-2.5 w-2.5 mr-0.5 text-zinc-500 shrink-0" />
+                                        <span className="truncate">{group.roomOrLocation}</span>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
-                              </div>
-                            );
-                          })}
+                              );
+                            });
+                          })()}
                         </div>
                       </td>
                     );
